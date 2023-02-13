@@ -64,6 +64,7 @@ public class MeetSky_FilesAndFolder_stepDefinitions {
         for (WebElement each : files.allFilesAndFOldersCheckboxes) {
             softAssert.assertTrue(each.isSelected());
         }
+        Driver.driverClose();
     }
 
 }
