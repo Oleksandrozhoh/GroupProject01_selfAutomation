@@ -28,4 +28,6 @@ public class MeetSkyLogin {
         loginButton.click();
     }
 
+    @FindBy (xpath = "//p[contains(.,'Wrong username or password.')]")
+    public WebElement wrongUsernameOrPasswordMessage;
 }
