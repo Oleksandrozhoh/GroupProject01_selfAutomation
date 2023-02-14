@@ -8,10 +8,8 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
     features = "src/test/resources/features",
         glue = "groupProject/step_definitions",
-        dryRun = false
+        dryRun = false,
+        tags = "@UnderDevelopment"
         )
 public class BladeRunner {
-
-
-
 }
