@@ -3,6 +3,7 @@ package groupProject.step_definitions;
 import groupProject.Pages.MeetSkyDashboard;
 import groupProject.Pages.MeetSkyFiles;
 import groupProject.Pages.MeetSkyLogin;
+import groupProject.Utilities.BrowserUtils;
 import groupProject.Utilities.ConfigurationReader;
 import groupProject.Utilities.Driver;
 import io.cucumber.java.en.Given;
@@ -53,11 +54,11 @@ public class MeetSky_stepDefinitions {
 
     @Then("User should see the checkbox selected indicating that the file or folder is selected.")
     public void user_should_see_the_checkbox_selected_indicating_that_the_file_or_folder_is_selected() {
-            Driver.driverClose();
+        BrowserUtils.logout();
     }
 
-    @When("User should be able to click the {string} checkbox.")
-    public void user_should_be_able_to_click_the_checkbox(String string) {
+    @When("User should be able to click the Select All checkbox.")
+    public void user_should_be_able_to_click_the_checkbox() {
         MeetSkyFiles files = new MeetSkyFiles();
         files.selectAllCheckbox.click();
     }
@@ -68,7 +69,7 @@ public class MeetSky_stepDefinitions {
         for (WebElement each : files.allFilesAndFOldersCheckboxes) {
             softAssert.assertTrue(each.isSelected());
         }
-        Driver.driverClose();
+        BrowserUtils.logout();
     }
 
 
@@ -122,6 +123,7 @@ public class MeetSky_stepDefinitions {
         String actualName = filesPage.fileNameSecondRow.getText();
         String expectedName = "renamed";
         Assert.assertEquals(actualName,expectedName);
+        BrowserUtils.logout();
     }
 
     @When("user select download from pop up menu")
@@ -135,6 +137,7 @@ public class MeetSky_stepDefinitions {
         MeetSkyFiles filesPage = new MeetSkyFiles();
         File file = new File("C:\\Users\\oleks\\Downloads\\"+filesPage.fileNameSecondRow.getText()+".zip");
         Assert.assertTrue(file.exists());
+        BrowserUtils.logout();
     }
 
     @Given("user is at the login page")
@@ -161,6 +164,20 @@ public class MeetSky_stepDefinitions {
         String actualTitle = Driver.getDriver().getTitle();
         String expectedTitle = "Dashboard";
         Assert.assertTrue(actualTitle.contains(expectedTitle));
+        BrowserUtils.logout();
+    }
+
+    @When("enters invalid username to username input box")
+    public void enters_invalid_username_to_username_input_box() {
+        MeetSkyLogin loginPage = new MeetSkyLogin();
+        loginPage.usernameInputBox.sendKeys("InvalidUsername");
+    }
+    @Then("user should see the warning message - Wrong username or password")
+    public void user_should_see_the_warning_message_invalid_username_or_password() {
+        MeetSkyLogin loginPage = new MeetSkyLogin();
+        String actualMessage = loginPage.wrongUsernameOrPasswordMessage.getText();
+        String expectedText = "Wrong username or password.";
+        Assert.assertTrue(actualMessage.contains(expectedText));
     }
 
 }
