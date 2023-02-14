@@ -1,3 +1,4 @@
+@Regression
 Feature: Upload and Download feature
 
   User story:
@@ -12,7 +13,7 @@ Feature: Upload and Download feature
     And user choose file and clicks open button
     Then file name should be displayed on the file page after successful upload.
 
-
+  @RenameFunctionality
     Scenario: 2.Verify the users can rename a file by clicking the 3 dots.
     - File name should be different after renaming it.
 
@@ -22,7 +23,7 @@ Feature: Upload and Download feature
       And user types new file name
       Then file name should be different after renaming it
 
-
+  @DownloadFunctionality
       Scenario: 3.Verify the users can download a file by clicking the 3 dots.
 
         Given User is at the file page
