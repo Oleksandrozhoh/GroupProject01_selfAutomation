@@ -3,6 +3,7 @@ package groupProject.step_definitions;
 import groupProject.Pages.MeetSkyDashboard;
 import groupProject.Pages.MeetSkyFiles;
 import groupProject.Pages.MeetSkyLogin;
+import groupProject.Utilities.ConfigurationReader;
 import groupProject.Utilities.Driver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -134,6 +135,32 @@ public class MeetSky_stepDefinitions {
         MeetSkyFiles filesPage = new MeetSkyFiles();
         File file = new File("C:\\Users\\oleks\\Downloads\\"+filesPage.fileNameSecondRow.getText()+".zip");
         Assert.assertTrue(file.exists());
+    }
+
+    @Given("user is at the login page")
+    public void user_is_at_the_login_page() {
+        Driver.getDriver().get(ConfigurationReader.getProperty("meetSkyURL"));
+    }
+    @When("enters valid username to username input box")
+    public void enters_valid_username_to_username_input_box() {
+        MeetSkyLogin loginPage = new MeetSkyLogin();
+        loginPage.usernameInputBox.sendKeys(ConfigurationReader.getProperty("meetSkyUsername"));
+    }
+    @When("enters valid password to password input box")
+    public void enters_valid_password_to_password_input_box() {
+        MeetSkyLogin loginPage = new MeetSkyLogin();
+        loginPage.passwordInputBox.sendKeys(ConfigurationReader.getProperty("meetSkyPassword"));
+    }
+    @When("clicks login button")
+    public void clicks_login_button() {
+        MeetSkyLogin loginPage = new MeetSkyLogin();
+        loginPage.loginButton.click();
+    }
+    @Then("land on the Dashboard page after successful login.")
+    public void land_on_the_page_after_successful_login() {
+        String actualTitle = Driver.getDriver().getTitle();
+        String expectedTitle = "Dashboard";
+        Assert.assertTrue(actualTitle.contains(expectedTitle));
     }
 
 }
