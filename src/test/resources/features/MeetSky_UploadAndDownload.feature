@@ -22,7 +22,7 @@ Feature: Upload and Download feature
       And user types new file name
       Then file name should be different after renaming it
 
-  @UnderDevelopment @Alex
+
       Scenario: 3.Verify the users can download a file by clicking the 3 dots.
 
         Given User is at the file page
