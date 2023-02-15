@@ -38,4 +38,7 @@ public class MeetSkyFiles {
     @FindBy (xpath = "//a[@data-action='Download']")
     public WebElement downloadOption;
 
+    @FindBy (xpath = "//span[@class='nametext']")
+    public List<WebElement> listOfFIleNames;
+
 }

@@ -11,5 +11,5 @@ import org.junit.runner.RunWith;
         dryRun = false,
         tags = "@Regression"
         )
-public class Alex_Runner {
+public class BladeRunner {
 }
