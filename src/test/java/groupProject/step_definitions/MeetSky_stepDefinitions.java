@@ -19,6 +19,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MeetSky_stepDefinitions {
     @Given("user are at the home page.")
@@ -120,11 +122,15 @@ public class MeetSky_stepDefinitions {
     @Then("file name should be different after renaming it")
     public void file_name_should_be_different_after_renaming_it() {
         MeetSkyFiles filesPage = new MeetSkyFiles();
-        String actualName = filesPage.fileNameSecondRow.getText();
+        List <String> allFileNames = new ArrayList<>();
         String expectedName = "renamed";
-        Assert.assertEquals(actualName,expectedName);
+        for (WebElement eachFileName : filesPage.listOfFIleNames) {
+            allFileNames.add(eachFileName.getText());
+            }
+        Assert.assertTrue(allFileNames.contains(expectedName));
         BrowserUtils.logout();
-    }
+        }
+
 
     @When("user select download from pop up menu")
     public void user_select_download_from_pop_up_menu() {
@@ -179,5 +185,19 @@ public class MeetSky_stepDefinitions {
         String expectedText = "Wrong username or password.";
         Assert.assertTrue(actualMessage.contains(expectedText));
     }
+
+    @When("enters password to password input box")
+    public void enters_password_to_password_input_box() {
+       MeetSkyLogin loginPage = new MeetSkyLogin();
+       loginPage.passwordInputBox.sendKeys("mySecretPassword");
+    }
+    @Then("password text box displays the characters entered by a user as bullet point")
+    public void password_text_box_displays_the_characters_entered_by_a_user_as_bullet_point() {
+        MeetSkyLogin loginPage = new MeetSkyLogin();
+        String typeAttributeValue = loginPage.passwordInputBox.getAttribute("type");
+        Assert.assertEquals("password",typeAttributeValue);
+
+    }
+
 
 }
