@@ -41,4 +41,10 @@ public class MeetSkyFiles {
     @FindBy (xpath = "//span[@class='nametext']")
     public List<WebElement> listOfFIleNames;
 
+    @FindBy (xpath = "//ul[@id='appmenu']//a[@aria-label='Activity']//*[name()='svg']//*[name()='image' and contains(@class,'app-icon')]")
+    public WebElement activityPage;
+
+    @FindBy (xpath = "//span[normalize-space()='Today']")
+    public WebElement getActivityPage;
+
 }

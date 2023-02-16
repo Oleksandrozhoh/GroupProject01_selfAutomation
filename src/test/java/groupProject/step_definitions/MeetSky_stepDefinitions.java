@@ -10,7 +10,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -200,4 +202,27 @@ public class MeetSky_stepDefinitions {
     }
 
 
+    @Given("user is on the MeetSky main page")
+    public void userIsOnTheMeetSkyMainPage() {
+        System.out.println("User logins on the MeetSky main page");
+        Driver.getDriver().get("https://qa.meetsky.net/index.php/login");
+        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();
+        meetSkyLogin.login();
+    }
+
+    @When("user clicks on Activity tab")
+    public void userClicksOnActivityTab() {
+        System.out.println("User clicks on Activity tab");
+        MeetSkyFiles meetSkyFiles = new MeetSkyFiles();
+        meetSkyFiles.activityPage.click();
+    }
+
+    @Then("user should be able to open the Activity page")
+    public void userShouldBeAbleToOpenTheActivityPage() {
+        System.out.println("User should be able to open the Activity page");
+        WebElement activityPageText = Driver.getDriver().findElement(By.xpath("//span[normalize-space()='Today']"));
+        String actualTitle = activityPageText.getText();
+        String expectedTitle = "Today";
+        Assert.assertEquals(actualTitle, expectedTitle);
+    }
 }
