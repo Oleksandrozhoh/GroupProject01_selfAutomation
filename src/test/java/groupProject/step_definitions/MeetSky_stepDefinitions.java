@@ -33,7 +33,7 @@ public class MeetSky_stepDefinitions {
     @When("user clicks on the Files module..")
     public void user_clicks_on_the_files_module() {
         MeetSkyDashboard dashboard = new MeetSkyDashboard();
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(),Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(dashboard.filesButton));
         dashboard.filesButton.click();
     }
@@ -85,20 +85,24 @@ public class MeetSky_stepDefinitions {
         dashboard.goToFiles();
 
     }
+
     @When("user clicks on the + icon")
     public void user_clicks_on_the_icon() {
         MeetSkyFiles filesPage = new MeetSkyFiles();
         filesPage.plusButton.click();
     }
+
     @When("user select upload file from pop up menu")
     public void user_select_from_pop_up_menu() {
         MeetSkyFiles filesPage = new MeetSkyFiles();
         filesPage.uploadFileOption.sendKeys("\"C:\\Users\\oleks\\OneDrive\\Desktop\\Screenshots\\251077486_227333759502218_5718729936563081174_n.jpg\"");
     }
+
     @When("user choose file and clicks open button")
     public void user_choose_file_and_clicks_button() {
 
     }
+
     @Then("file name should be displayed on the file page after successful upload.")
     public void file_name_should_be_displayed_on_the_file_page_after_successful_upload() {
 
@@ -109,27 +113,30 @@ public class MeetSky_stepDefinitions {
         MeetSkyFiles filesPage = new MeetSkyFiles();
         filesPage.treeDotsIcon_2ndRow.click();
     }
+
     @When("user select rename from pop up menu")
     public void user_select_rename_from_pop_up_menu() {
         MeetSkyFiles filesPage = new MeetSkyFiles();
         filesPage.renameOption.click();
     }
+
     @When("user types new file name")
     public void user_types_new_file_name() {
         Actions actions = new Actions(Driver.getDriver());
-        actions.sendKeys("renamed"+ Keys.ENTER).perform();
+        actions.sendKeys("renamed" + Keys.ENTER).perform();
     }
+
     @Then("file name should be different after renaming it")
     public void file_name_should_be_different_after_renaming_it() {
         MeetSkyFiles filesPage = new MeetSkyFiles();
-        List <String> allFileNames = new ArrayList<>();
+        List<String> allFileNames = new ArrayList<>();
         String expectedName = "renamed";
         for (WebElement eachFileName : filesPage.listOfFIleNames) {
             allFileNames.add(eachFileName.getText());
-            }
+        }
         Assert.assertTrue(allFileNames.contains(expectedName));
         BrowserUtils.logout();
-        }
+    }
 
 
     @When("user select download from pop up menu")
@@ -141,7 +148,7 @@ public class MeetSky_stepDefinitions {
     @Then("file should be downloaded to users computer")
     public void file_should_be_downloaded_to_users_computer() {
         MeetSkyFiles filesPage = new MeetSkyFiles();
-        File file = new File("C:\\Users\\oleks\\Downloads\\"+filesPage.fileNameSecondRow.getText()+".zip");
+        File file = new File("C:\\Users\\oleks\\Downloads\\" + filesPage.fileNameSecondRow.getText() + ".zip");
         Assert.assertTrue(file.exists());
         BrowserUtils.logout();
     }
@@ -150,21 +157,25 @@ public class MeetSky_stepDefinitions {
     public void user_is_at_the_login_page() {
         Driver.getDriver().get(ConfigurationReader.getProperty("meetSkyURL"));
     }
+
     @When("enters valid username to username input box")
     public void enters_valid_username_to_username_input_box() {
         MeetSkyLogin loginPage = new MeetSkyLogin();
         loginPage.usernameInputBox.sendKeys(ConfigurationReader.getProperty("meetSkyUsername"));
     }
+
     @When("enters valid password to password input box")
     public void enters_valid_password_to_password_input_box() {
         MeetSkyLogin loginPage = new MeetSkyLogin();
         loginPage.passwordInputBox.sendKeys(ConfigurationReader.getProperty("meetSkyPassword"));
     }
+
     @When("clicks login button")
     public void clicks_login_button() {
         MeetSkyLogin loginPage = new MeetSkyLogin();
         loginPage.loginButton.click();
     }
+
     @Then("land on the Dashboard page after successful login.")
     public void land_on_the_page_after_successful_login() {
         String actualTitle = Driver.getDriver().getTitle();
@@ -178,6 +189,7 @@ public class MeetSky_stepDefinitions {
         MeetSkyLogin loginPage = new MeetSkyLogin();
         loginPage.usernameInputBox.sendKeys("InvalidUsername");
     }
+
     @Then("user should see the warning message - Wrong username or password")
     public void user_should_see_the_warning_message_invalid_username_or_password() {
         MeetSkyLogin loginPage = new MeetSkyLogin();
@@ -188,16 +200,45 @@ public class MeetSky_stepDefinitions {
 
     @When("enters password to password input box")
     public void enters_password_to_password_input_box() {
-       MeetSkyLogin loginPage = new MeetSkyLogin();
-       loginPage.passwordInputBox.sendKeys("mySecretPassword");
+        MeetSkyLogin loginPage = new MeetSkyLogin();
+        loginPage.passwordInputBox.sendKeys("mySecretPassword");
     }
+
     @Then("password text box displays the characters entered by a user as bullet point")
     public void password_text_box_displays_the_characters_entered_by_a_user_as_bullet_point() {
         MeetSkyLogin loginPage = new MeetSkyLogin();
         String typeAttributeValue = loginPage.passwordInputBox.getAttribute("type");
-        Assert.assertEquals("password",typeAttributeValue);
+        Assert.assertEquals("password", typeAttributeValue);
+
 
     }
 
+    //Irina  TODO: 2/15/23
+/*@Given("user on the Files page")
+public void user_on_the_files_page() {
+user_is_at_the_file_page();
+     Driver.getDriver().get("https://qa.meetsky.net/index.php/login");
+  MeetSkyLogin meetSkyLogin = new MeetSkyLogin();
+   meetSkyLogin.login();
+    MeetSkyDashboard meetSkyDashboard= new MeetSkyDashboard();
+    meetSkyDashboard.filesButton.click();
+
+
+
+}
+  */
+    @When("user clicks on new folder and type a name")
+    public void user_clicks_on_new_folder_and_type_a_name()  {
+        MeetSkyFiles meetSkyFiles = new MeetSkyFiles();
+        meetSkyFiles.newFolderOption.click();
+        String folder_name = "Irina test auto";
+        meetSkyFiles.inputNewFolderNameOption.sendKeys(folder_name + Keys.ENTER);
+
+    }
+
+    @Then("user should see new folder with the name displayed on the Files page")
+    public void user_should_see_new_folder_with_the_name_displayed_on_the_files_page() {
+        MeetSkyFiles.new_folder_display_verification("Irina test auto");
+    }
 
 }
