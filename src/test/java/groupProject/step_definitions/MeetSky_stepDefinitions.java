@@ -320,7 +320,9 @@ public class MeetSky_stepDefinitions {
 
     @When("user clicks on the Add to favourites option")
     public void user_clicks_on_the_add_to_favourites_option() {
-        talkPage.addToFavouritesOption.click();
+        if (talkPage.addToFavouritesOption.isDisplayed()) {
+            talkPage.addToFavouritesOption.click();
+        }
     }
     @Then("the app changes from the “Add to favorite” to “Remove from favorite”.")
     public void the_app_changes_from_the_add_to_favorite_to_remove_from_favorite() {
@@ -365,5 +367,6 @@ public class MeetSky_stepDefinitions {
         String actualTitle = activityPageText.getText();
         String expectedTitle = "Today";
         Assert.assertEquals(actualTitle, expectedTitle);
+        BrowserUtils.logout();
     }
 }

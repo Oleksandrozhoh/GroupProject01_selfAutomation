@@ -1,3 +1,4 @@
+@Regression
 Feature: Manage conversations feature
 
   User story:
