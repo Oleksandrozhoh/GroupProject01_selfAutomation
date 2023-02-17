@@ -325,6 +325,19 @@ public class MeetSky_stepDefinitions {
     public void the_app_changes_from_the_add_to_favorite_to_remove_from_favorite() {
         Assert.assertTrue(talkPage.removeFromFavourites.isDisplayed());
     }
+    @When("user clicks on new folder and type a name")
+    public void user_clicks_on_new_folder_and_type_a_name()  {
+        MeetSkyFiles meetSkyFiles = new MeetSkyFiles();
+        meetSkyFiles.newFolderOption.click();
+        String folder_name = "Irina test auto";
+        meetSkyFiles.inputNewFolderNameOption.sendKeys(folder_name + Keys.ENTER);
+
+    }
+
+    @Then("user should see new folder with the name displayed on the Files page")
+    public void user_should_see_new_folder_with_the_name_displayed_on_the_files_page() {
+        MeetSkyFiles.new_folder_display_verification("Irina test auto");
+    }
 
 
 }
