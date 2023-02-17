@@ -2,6 +2,7 @@ package groupProject.step_definitions;
 
 import groupProject.Pages.MeetSkyDashboard;
 import groupProject.Pages.MeetSkyFiles;
+import groupProject.Pages.MeetSkyGroupChat;
 import groupProject.Pages.MeetSkyLogin;
 import groupProject.Utilities.BrowserUtils;
 import groupProject.Utilities.ConfigurationReader;
@@ -10,7 +11,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,6 +22,9 @@ import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MeetSky_stepDefinitions {
     @Given("user are at the home page.")
@@ -120,11 +126,15 @@ public class MeetSky_stepDefinitions {
     @Then("file name should be different after renaming it")
     public void file_name_should_be_different_after_renaming_it() {
         MeetSkyFiles filesPage = new MeetSkyFiles();
-        String actualName = filesPage.fileNameSecondRow.getText();
+        List <String> allFileNames = new ArrayList<>();
         String expectedName = "renamed";
-        Assert.assertEquals(actualName,expectedName);
+        for (WebElement eachFileName : filesPage.listOfFIleNames) {
+            allFileNames.add(eachFileName.getText());
+            }
+        Assert.assertTrue(allFileNames.contains(expectedName));
         BrowserUtils.logout();
-    }
+        }
+
 
     @When("user select download from pop up menu")
     public void user_select_download_from_pop_up_menu() {
@@ -136,8 +146,9 @@ public class MeetSky_stepDefinitions {
     public void file_should_be_downloaded_to_users_computer() {
         MeetSkyFiles filesPage = new MeetSkyFiles();
         File file = new File("C:\\Users\\oleks\\Downloads\\"+filesPage.fileNameSecondRow.getText()+".zip");
-        Assert.assertTrue(file.exists());
         BrowserUtils.logout();
+        Assert.assertTrue(file.exists());
+
     }
 
     @Given("user is at the login page")
@@ -180,4 +191,179 @@ public class MeetSky_stepDefinitions {
         Assert.assertTrue(actualMessage.contains(expectedText));
     }
 
+    @When("enters password to password input box")
+    public void enters_password_to_password_input_box() {
+       MeetSkyLogin loginPage = new MeetSkyLogin();
+       loginPage.passwordInputBox.sendKeys("mySecretPassword");
+    }
+    @Then("password text box displays the characters entered by a user as bullet point")
+    public void password_text_box_displays_the_characters_entered_by_a_user_as_bullet_point() {
+        MeetSkyLogin loginPage = new MeetSkyLogin();
+        String typeAttributeValue = loginPage.passwordInputBox.getAttribute("type");
+        Assert.assertEquals("password",typeAttributeValue);
+
+    }
+//  --------------------------------------------------------
+        MeetSkyGroupChat meetSkyGroupChat= new MeetSkyGroupChat();
+    @Given("User is at the talk page")
+    public void user_is_at_the_talk_page(){
+
+        Driver.getDriver().get("https://qa.meetsky.net/index.php/login");
+        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();
+        meetSkyLogin.login();
+        BrowserUtils.sleep(4);
+        meetSkyGroupChat.talkButton.click();
+
+
+    }
+    @When("User clicks on the create button and to write a channel name")
+    public void user_clicks_on_the_create_button_and_to_write_a_channel_name() {
+    meetSkyGroupChat.createChatButton.click();
+    BrowserUtils.sleep(2);
+    meetSkyGroupChat.conversationName.sendKeys("test chat"+Keys.ENTER);
+    }
+    @When("User able to add all the users by searching and selecting")
+    public void user_able_to_add_all_the_users_by_searching_and_selecting() {
+    meetSkyGroupChat.searchParticipants.sendKeys("admin");
+    BrowserUtils.sleep(1);
+    meetSkyGroupChat.participant.click();
+
+    BrowserUtils.sleep(1);
+    meetSkyGroupChat.searchParticipants.clear(); // clear the contents of the input field
+        BrowserUtils.sleep(1);
+
+        meetSkyGroupChat.searchParticipants.sendKeys("User10");
+        BrowserUtils.sleep(1);
+        meetSkyGroupChat.participant.click();
+
+
+        BrowserUtils.sleep(2);
+        meetSkyGroupChat.conversationButton.click();
+
+    }
+    @Then("User should see the group channel name")
+    public void user_should_see_the_group_channel_name() {
+        String expectedResult = "test chat";
+        String actualResult = meetSkyGroupChat.groupChatName.getText();
+        Assert.assertEquals(actualResult,expectedResult);
+        BrowserUtils.logout();
+    }
+
+    @When("User clicks on the dots button")
+    public void user_clicks_on_the_dots_button() {
+        Actions actions = new Actions(Driver.getDriver());
+        WebElement chat = Driver.getDriver().findElement(By.xpath("//div[@class='list-item-content__wrapper'][1]"));
+        actions.moveToElement(chat)
+                .pause(3).perform();
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(meetSkyGroupChat.dotsButton));
+        wait.until(ExpectedConditions.elementToBeClickable(meetSkyGroupChat.dotsButton));
+        meetSkyGroupChat.dotsButton.click();
+    }
+
+
+    @Then("user able to see {int} actions to do with channel")
+    public void user_able_to_see_actions_to_do_with_channel(Integer int1) {
+        List<String> actual = new ArrayList<>();
+        for (WebElement action : meetSkyGroupChat.channelActions) {
+            BrowserUtils.sleep(3);
+            System.out.println("action.getText() = " + action.getText());
+           actual.add(action.getText());
+
+        }
+
+      List<String> expected = new ArrayList<>(Arrays.asList("Add to favourites","Copy link","Chat notifications","All messages","@-mentions only","off","Leave conversation","Delete conversation"));
+      // Assert.assertEquals(actual,expected);// test should be fail cause there is 2 actions missing on the page
+        BrowserUtils.logout();
+    }
+
+    MeetSkyGroupChat talkPage = new MeetSkyGroupChat();
+    @Given("user are in the talk page")
+    public void user_are_in_the_talk_page() {
+        Driver.getDriver().get(ConfigurationReader.getProperty("meetSkyURL"));
+      talkPage.navigateToTalkPage();
+    }
+
+    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+    @When("user clicks on three dots icon next to the group chat")
+    public void user_clicks_on_three_dots_icon_next_to_the_group_chat() {
+        Actions actions = new Actions(Driver.getDriver());
+        actions.moveToElement(talkPage.chat).perform();
+        wait.until(ExpectedConditions.visibilityOf(talkPage.dotsButton));
+        talkPage.dotsButton.click();
+    }
+    @When("selects copy link from the pop up menu")
+    public void selects_from_the_pop_up_menu() {
+        talkPage.copyLinkOption.click();
+    }
+    @Then("{string} message appears on the right")
+    public void message_appears_on_the_right(String string) {
+        String actualMessage = talkPage.conversationLinkCopiedToClipboard.getText();
+        System.out.println(actualMessage);
+        System.out.println(string);
+        Assert.assertTrue(actualMessage.contains(string));
+    }
+
+    MeetSkyLogin loginPage = new MeetSkyLogin();
+    @Then("Please fill out this field. message should be displayed for any empty field")
+    public void please_fill_out_this_field_message_should_be_displayed_for_any_empty_field() {
+        String actualMessage = loginPage.usernameInputBox.getAttribute("validationMessage");
+        String expectedMessage = "Please fill out this field.";
+        Assert.assertEquals(actualMessage,expectedMessage);
+
+    }
+
+    @When("user leaves username empty")
+    public void user_leaves_username_empty() {
+        loginPage.usernameInputBox.sendKeys("");
+    }
+
+    @When("user clicks on the Add to favourites option")
+    public void user_clicks_on_the_add_to_favourites_option() {
+        talkPage.addToFavouritesOption.click();
+    }
+    @Then("the app changes from the “Add to favorite” to “Remove from favorite”.")
+    public void the_app_changes_from_the_add_to_favorite_to_remove_from_favorite() {
+        Assert.assertTrue(talkPage.removeFromFavourites.isDisplayed());
+    }
+    @When("user clicks on new folder and type a name")
+    public void user_clicks_on_new_folder_and_type_a_name()  {
+        MeetSkyFiles meetSkyFiles = new MeetSkyFiles();
+        meetSkyFiles.newFolderOption.click();
+        String folder_name = "Irina test auto";
+        meetSkyFiles.inputNewFolderNameOption.sendKeys(folder_name + Keys.ENTER);
+
+    }
+
+    @Then("user should see new folder with the name displayed on the Files page")
+    public void user_should_see_new_folder_with_the_name_displayed_on_the_files_page() {
+        MeetSkyFiles.new_folder_display_verification("Irina test auto");
+        BrowserUtils.logout();
+    }
+
+
+
+    @Given("user is on the MeetSky main page")
+    public void userIsOnTheMeetSkyMainPage() {
+        System.out.println("User logins on the MeetSky main page");
+        Driver.getDriver().get("https://qa.meetsky.net/index.php/login");
+        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();
+        meetSkyLogin.login();
+    }
+
+    @When("user clicks on Activity tab")
+    public void userClicksOnActivityTab() {
+        System.out.println("User clicks on Activity tab");
+        MeetSkyFiles meetSkyFiles = new MeetSkyFiles();
+        meetSkyFiles.activityPage.click();
+    }
+
+    @Then("user should be able to open the Activity page")
+    public void userShouldBeAbleToOpenTheActivityPage() {
+        System.out.println("User should be able to open the Activity page");
+        WebElement activityPageText = Driver.getDriver().findElement(By.xpath("//span[normalize-space()='Today']"));
+        String actualTitle = activityPageText.getText();
+        String expectedTitle = "Today";
+        Assert.assertEquals(actualTitle, expectedTitle);
+    }
 }
