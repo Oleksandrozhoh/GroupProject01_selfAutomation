@@ -145,8 +145,9 @@ public class MeetSky_stepDefinitions {
     public void file_should_be_downloaded_to_users_computer() {
         MeetSkyFiles filesPage = new MeetSkyFiles();
         File file = new File("C:\\Users\\oleks\\Downloads\\"+filesPage.fileNameSecondRow.getText()+".zip");
-        Assert.assertTrue(file.exists());
         BrowserUtils.logout();
+        Assert.assertTrue(file.exists());
+
     }
 
     @Given("user is at the login page")
@@ -273,6 +274,56 @@ public class MeetSky_stepDefinitions {
       List<String> expected = new ArrayList<>(Arrays.asList("Add to favourites","Copy link","Chat notifications","All messages","@-mentions only","off","Leave conversation","Delete conversation"));
       // Assert.assertEquals(actual,expected);// test should be fail cause there is 2 actions missing on the page
         BrowserUtils.logout();
+    }
+
+    MeetSkyGroupChat talkPage = new MeetSkyGroupChat();
+    @Given("user are in the talk page")
+    public void user_are_in_the_talk_page() {
+        Driver.getDriver().get(ConfigurationReader.getProperty("meetSkyURL"));
+      talkPage.navigateToTalkPage();
+    }
+
+    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+    @When("user clicks on three dots icon next to the group chat")
+    public void user_clicks_on_three_dots_icon_next_to_the_group_chat() {
+        Actions actions = new Actions(Driver.getDriver());
+        actions.moveToElement(talkPage.chat).perform();
+        wait.until(ExpectedConditions.visibilityOf(talkPage.dotsButton));
+        talkPage.dotsButton.click();
+    }
+    @When("selects copy link from the pop up menu")
+    public void selects_from_the_pop_up_menu() {
+        talkPage.copyLinkOption.click();
+    }
+    @Then("{string} message appears on the right")
+    public void message_appears_on_the_right(String string) {
+        String actualMessage = talkPage.conversationLinkCopiedToClipboard.getText();
+        System.out.println(actualMessage);
+        System.out.println(string);
+        Assert.assertTrue(actualMessage.contains(string));
+    }
+
+    MeetSkyLogin loginPage = new MeetSkyLogin();
+    @Then("Please fill out this field. message should be displayed for any empty field")
+    public void please_fill_out_this_field_message_should_be_displayed_for_any_empty_field() {
+        String actualMessage = loginPage.usernameInputBox.getAttribute("validationMessage");
+        String expectedMessage = "Please fill out this field.";
+        Assert.assertEquals(actualMessage,expectedMessage);
+
+    }
+
+    @When("user leaves username empty")
+    public void user_leaves_username_empty() {
+        loginPage.usernameInputBox.sendKeys("");
+    }
+
+    @When("user clicks on the Add to favourites option")
+    public void user_clicks_on_the_add_to_favourites_option() {
+        talkPage.addToFavouritesOption.click();
+    }
+    @Then("the app changes from the “Add to favorite” to “Remove from favorite”.")
+    public void the_app_changes_from_the_add_to_favorite_to_remove_from_favorite() {
+        Assert.assertTrue(talkPage.removeFromFavourites.isDisplayed());
     }
 
 
