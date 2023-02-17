@@ -1,12 +1,10 @@
 package groupProject.step_definitions;
 
-import groupProject.Pages.MeetSkyDashboard;
-import groupProject.Pages.MeetSkyFiles;
-import groupProject.Pages.MeetSkyGroupChat;
-import groupProject.Pages.MeetSkyLogin;
+import groupProject.Pages.*;
 import groupProject.Utilities.BrowserUtils;
 import groupProject.Utilities.ConfigurationReader;
 import groupProject.Utilities.Driver;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -275,5 +273,54 @@ public class MeetSky_stepDefinitions {
         BrowserUtils.logout();
     }
 
+    MeetSkyLogin loginPage = new MeetSkyLogin();
 
+
+    @When("User clicks on the profile button")
+    public void userClicksOnTheProfileButton() {
+        MeetSkyLogout profile = new MeetSkyLogout();
+        profile.profileBtn.click();
+
+    }
+
+    @And("User presses log out button")
+    public void userPressesLogOutButton() {
+        MeetSkyLogout logout = new MeetSkyLogout();
+        logout.logoutBtn.click();
+    }
+
+    @Then("User lands on the login page")
+    public void userLandsOnTheLoginPage() {
+        BrowserUtils.verifyTitle("QA - Meetsky");
+    }
+
+    @Given("User is at login page")
+    public void userIsAtLoginPage() {
+        BrowserUtils.verifyTitle("QA - Meetsky");
+    }
+
+    @When("User clicks back button")
+    public void userClicksBackButton() {
+        Driver.getDriver().navigate().back();
+    }
+
+    @Then("User stays at login page")
+    public void userStaysAtLoginPage() {
+        BrowserUtils.verifyTitle("QA - Meetsky");
+    }
+
+    @Given("User is logged in")
+    public void userIsLoggedIn() {
+        BrowserUtils.verifyTitle("Dashboard - QA - Meetsky");
+    }
+
+    @When("User doesn't perform any action for {int} minutes")
+    public void userDoesnTPerformAnyActionForMinutes(int arg0) throws InterruptedException {
+        Thread.sleep(180000);
+    }
+
+    @Then("User is logged out automatically")
+    public void userIsLoggedOutAutomatically() {
+        BrowserUtils.verifyTitle("QA - Meetsky");
+    }
 }
