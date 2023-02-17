@@ -6,12 +6,10 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin = "html:target/cucumber-reports.html",
-        publish = true,
-        features = "src/test/resources/features",
+    features = "src/test/resources/features",
         glue = "groupProject/step_definitions",
         dryRun = false,
-        tags = "@wip"
+        tags = "@favorites"
         )
 public class BladeRunner {
 }
