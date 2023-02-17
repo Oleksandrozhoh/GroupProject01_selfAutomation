@@ -337,7 +337,9 @@ public class MeetSky_stepDefinitions {
     @Then("user should see new folder with the name displayed on the Files page")
     public void user_should_see_new_folder_with_the_name_displayed_on_the_files_page() {
         MeetSkyFiles.new_folder_display_verification("Irina test auto");
+        BrowserUtils.logout();
     }
+
 
 
 }
