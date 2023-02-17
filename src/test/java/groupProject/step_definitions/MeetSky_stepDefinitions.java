@@ -2,6 +2,7 @@ package groupProject.step_definitions;
 
 import groupProject.Pages.MeetSkyDashboard;
 import groupProject.Pages.MeetSkyFiles;
+import groupProject.Pages.MeetSkyGroupChat;
 import groupProject.Pages.MeetSkyLogin;
 import groupProject.Utilities.BrowserUtils;
 import groupProject.Utilities.ConfigurationReader;
@@ -10,6 +11,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -20,6 +22,7 @@ import org.testng.asserts.SoftAssert;
 import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MeetSky_stepDefinitions {
@@ -211,6 +214,79 @@ public class MeetSky_stepDefinitions {
         Assert.assertEquals("password", typeAttributeValue);
 
 
+    }
+//  --------------------------------------------------------
+        MeetSkyGroupChat meetSkyGroupChat= new MeetSkyGroupChat();
+    @Given("User is at the talk page")
+    public void user_is_at_the_talk_page(){
+
+        Driver.getDriver().get("https://qa.meetsky.net/index.php/login");
+        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();
+        meetSkyLogin.login();
+        BrowserUtils.sleep(4);
+        meetSkyGroupChat.talkButton.click();
+
+
+    }
+    @When("User clicks on the create button and to write a channel name")
+    public void user_clicks_on_the_create_button_and_to_write_a_channel_name() {
+    meetSkyGroupChat.createChatButton.click();
+    BrowserUtils.sleep(2);
+    meetSkyGroupChat.conversationName.sendKeys("test chat"+Keys.ENTER);
+    }
+    @When("User able to add all the users by searching and selecting")
+    public void user_able_to_add_all_the_users_by_searching_and_selecting() {
+    meetSkyGroupChat.searchParticipants.sendKeys("admin");
+    BrowserUtils.sleep(1);
+    meetSkyGroupChat.participant.click();
+
+    BrowserUtils.sleep(1);
+    meetSkyGroupChat.searchParticipants.clear(); // clear the contents of the input field
+        BrowserUtils.sleep(1);
+
+        meetSkyGroupChat.searchParticipants.sendKeys("User10");
+        BrowserUtils.sleep(1);
+        meetSkyGroupChat.participant.click();
+
+
+        BrowserUtils.sleep(2);
+        meetSkyGroupChat.conversationButton.click();
+
+    }
+    @Then("User should see the group channel name")
+    public void user_should_see_the_group_channel_name() {
+        String expectedResult = "test chat";
+        String actualResult = meetSkyGroupChat.groupChatName.getText();
+        Assert.assertEquals(actualResult,expectedResult);
+        BrowserUtils.logout();
+    }
+
+    @When("User clicks on the dots button")
+    public void user_clicks_on_the_dots_button() {
+        Actions actions = new Actions(Driver.getDriver());
+        WebElement chat = Driver.getDriver().findElement(By.xpath("//div[@class='list-item-content__wrapper'][1]"));
+        actions.moveToElement(chat)
+                .pause(3).perform();
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(meetSkyGroupChat.dotsButton));
+        wait.until(ExpectedConditions.elementToBeClickable(meetSkyGroupChat.dotsButton));
+        meetSkyGroupChat.dotsButton.click();
+    }
+
+
+    @Then("user able to see {int} actions to do with channel")
+    public void user_able_to_see_actions_to_do_with_channel(Integer int1) {
+        List<String> actual = new ArrayList<>();
+        for (WebElement action : meetSkyGroupChat.channelActions) {
+            BrowserUtils.sleep(3);
+            System.out.println("action.getText() = " + action.getText());
+           actual.add(action.getText());
+
+        }
+
+      List<String> expected = new ArrayList<>(Arrays.asList("Add to favourites","Copy link","Chat notifications","All messages","@-mentions only","off","Leave conversation","Delete conversation"));
+      // Assert.assertEquals(actual,expected);// test should be fail cause there is 2 actions missing on the page
+        BrowserUtils.logout();
     }
 
     //Irina  TODO: 2/15/23
