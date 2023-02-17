@@ -10,6 +10,7 @@ Feature: Files & folders feature
     When user clicks on any file or folder checkbox
     Then User should see the checkbox selected indicating that the file or folder is selected.
 
+      @Alvin
     Scenario: Verify all the files & folders are selected after clicking the top checkbox.
       When user clicks on the Files module..
       Then user launched to the Files page
