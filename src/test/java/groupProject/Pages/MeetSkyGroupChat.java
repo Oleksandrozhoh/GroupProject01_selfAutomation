@@ -61,12 +61,14 @@ public class MeetSkyGroupChat {
     @FindBy (xpath = "//div[@class='toastify on dialogs toast-success toastify-right toastify-top']")
     public WebElement conversationLinkCopiedToClipboard;
 
-    @FindBy (xpath = "//span[.='Add to favorites']/..")
+    @FindBy (xpath = "//span[.='Add to favorites']")
     public WebElement addToFavouritesOption;
 
     @FindBy (xpath = "//p[.='Remove from favorites']")
     public WebElement removeFromFavourites;
 
+    @FindBy (xpath = "//span[@class='icon icon-favorite']")
+    public WebElement starIcon;
 
 
 
