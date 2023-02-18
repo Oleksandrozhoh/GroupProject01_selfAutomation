@@ -1,5 +1,4 @@
-@regression
-
+@Regression
 Feature: photo page functionality
   user story:As a user, I should be able to access to the photo page.
 
