@@ -94,14 +94,16 @@ public class MeetSky_stepDefinitions {
         MeetSkyFiles filesPage = new MeetSkyFiles();
         filesPage.plusButton.click();
     }
+
+    MeetSkyFiles filesPage = new MeetSkyFiles();
     @When("user select upload file from pop up menu")
     public void user_select_from_pop_up_menu() {
-        MeetSkyFiles filesPage = new MeetSkyFiles();
+
         filesPage.uploadFileOption.sendKeys("\"C:\\Users\\oleks\\OneDrive\\Desktop\\Screenshots\\251077486_227333759502218_5718729936563081174_n.jpg\"");
     }
     @When("user choose file and clicks open button")
     public void user_choose_file_and_clicks_button() {
-
+        filesPage.uploadFileTag.sendKeys("\"C:\\Users\\oleks\\OneDrive\\Desktop\\Screenshots\\435.jpg\"");
     }
     @Then("file name should be displayed on the file page after successful upload.")
     public void file_name_should_be_displayed_on_the_file_page_after_successful_upload() {
@@ -285,9 +287,10 @@ public class MeetSky_stepDefinitions {
     }
 
     WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+
+    Actions actions = new Actions(Driver.getDriver());
     @When("user clicks on three dots icon next to the group chat")
     public void user_clicks_on_three_dots_icon_next_to_the_group_chat() {
-        Actions actions = new Actions(Driver.getDriver());
         actions.moveToElement(talkPage.chat).perform();
         wait.until(ExpectedConditions.visibilityOf(talkPage.dotsButton));
         talkPage.dotsButton.click();
@@ -320,13 +323,15 @@ public class MeetSky_stepDefinitions {
 
     @When("user clicks on the Add to favourites option")
     public void user_clicks_on_the_add_to_favourites_option() {
-        if (talkPage.addToFavouritesOption.isDisplayed()) {
-            talkPage.addToFavouritesOption.click();
+        if (talkPage.starIcon.isDisplayed()){
+            talkPage.removeFromFavourites.click();
         }
+        talkPage.addToFavouritesOption.click();
     }
     @Then("the app changes from the “Add to favorite” to “Remove from favorite”.")
     public void the_app_changes_from_the_add_to_favorite_to_remove_from_favorite() {
         Assert.assertTrue(talkPage.removeFromFavourites.isDisplayed());
+        BrowserUtils.logout();
     }
     @When("user clicks on new folder and type a name")
     public void user_clicks_on_new_folder_and_type_a_name()  {
