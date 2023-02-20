@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
     features = "src/test/resources/features",
         glue = "groupProject/step_definitions",
         dryRun = false,
+        tags = "@AwayFromTheKeyboard"
         tags = "@Khrystyna"
         )
 public class BladeRunner {

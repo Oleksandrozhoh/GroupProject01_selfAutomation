@@ -1,5 +1,7 @@
 package groupProject.step_definitions;
 
+import com.beust.ah.A;
+import groupProject.Pages.*;
 import groupProject.Pages.*;
 import groupProject.Utilities.BrowserUtils;
 import groupProject.Utilities.ConfigurationReader;
@@ -10,6 +12,11 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -370,6 +377,31 @@ public class MeetSky_stepDefinitions {
         BrowserUtils.logout();
     }
 
+    MeetSkyLogin meetSkyLogin = new MeetSkyLogin();
+
+
+    @When("User clicks on the profile button")
+    public void userClicksOnTheProfileButton() {
+        MeetSkyLogout profile = new MeetSkyLogout();
+        profile.profileBtn.click();
+
+    }
+
+    @And("User presses log out button")
+    public void userPressesLogOutButton() {
+        MeetSkyLogout logout = new MeetSkyLogout();
+        logout.logoutBtn.click();
+    }
+
+    @Then("User lands on the login page")
+    public void userLandsOnTheLoginPage() {
+        BrowserUtils.verifyTitle("QA - Meetsky");
+    }
+
+    @Given("User is at login page")
+    public void userIsAtLoginPage() {
+        BrowserUtils.verifyTitle("QA - Meetsky");
+    }
 
     @Given("user is on the MeetSky main page")
     public void userIsOnTheMeetSkyMainPage() {
@@ -401,6 +433,36 @@ public class MeetSky_stepDefinitions {
     @When("user clicks on Talk module")
     public void userClicksOnTalkModule() {
         meetSkyTalkPage.talkButton.click();
+    }
+    @When("User clicks back button")
+    public void userClicksBackButton() {
+        Driver.getDriver().navigate().back();
+    }
+
+    @Then("User stays at login page")
+    public void userStaysAtLoginPage() {
+        BrowserUtils.verifyTitle("QA - Meetsky");
+    }
+
+    @Given("User is logged in")
+    public void userIsLoggedIn() {
+        BrowserUtils.verifyTitle("QA - Meetsky");
+    }
+
+    @When("User doesn't perform any action for {int} minutes")
+    public void userDoesnTPerformAnyActionForMinutes(int arg0){
+      Actions action = new Actions(Driver.getDriver());
+      action.pause(3).perform();
+
+
+          }
+
+
+
+    @Then("User is logged out automatically")
+    public void userIsLoggedOutAutomatically() {
+       // BrowserUtils.verifyTitle("QA - Meetsky");
+        Assert.assertEquals(Driver.getDriver().getTitle(),"Dashboard - QA - Meetsky");
     }
 
     @And("user clicks on app-navigation-toggle\\({string} sign)")
