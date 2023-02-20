@@ -1,3 +1,4 @@
+@Regression
 Feature: MeetSky search functionality
   Agile story: As a user, I should be able to access to the activity page.
 

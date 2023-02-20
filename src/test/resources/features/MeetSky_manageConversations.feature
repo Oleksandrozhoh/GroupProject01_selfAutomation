@@ -1,3 +1,4 @@
+@Regression
 Feature: Manage conversations feature
 
   User story:
@@ -14,6 +15,7 @@ Feature: Manage conversations feature
   Scenario: 2. Verify users can add a conversation to favorites.
   - after adding to favorites, the app changes from the “Add to favorite” to “Remove from favorite”.
     Given user are in the talk page
+  # add favourite icon to the POM and build a logic around it
     When user clicks on three dots icon next to the group chat
     And user clicks on the Add to favourites option
     Then the app changes from the “Add to favorite” to “Remove from favorite”.

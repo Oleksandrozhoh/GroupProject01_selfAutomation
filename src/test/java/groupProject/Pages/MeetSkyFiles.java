@@ -62,5 +62,8 @@ public class MeetSkyFiles {
         Assert.assertTrue(newfolder.isDisplayed());
     }
 
+    @FindBy (xpath = "//input[@type='file']")
+    public WebElement uploadFileTag;
+
 
 }
