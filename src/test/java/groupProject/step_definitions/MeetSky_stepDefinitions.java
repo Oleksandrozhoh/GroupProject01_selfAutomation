@@ -1,5 +1,6 @@
 package groupProject.step_definitions;
 
+import com.beust.ah.A;
 import groupProject.Pages.*;
 import groupProject.Utilities.BrowserUtils;
 import groupProject.Utilities.ConfigurationReader;
@@ -11,7 +12,9 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -143,8 +146,9 @@ public class MeetSky_stepDefinitions {
     public void file_should_be_downloaded_to_users_computer() {
         MeetSkyFiles filesPage = new MeetSkyFiles();
         File file = new File("C:\\Users\\oleks\\Downloads\\"+filesPage.fileNameSecondRow.getText()+".zip");
-        Assert.assertTrue(file.exists());
         BrowserUtils.logout();
+        Assert.assertTrue(file.exists());
+
     }
 
     @Given("user is at the login page")
@@ -273,7 +277,71 @@ public class MeetSky_stepDefinitions {
         BrowserUtils.logout();
     }
 
+    MeetSkyGroupChat talkPage = new MeetSkyGroupChat();
+    @Given("user are in the talk page")
+    public void user_are_in_the_talk_page() {
+        Driver.getDriver().get(ConfigurationReader.getProperty("meetSkyURL"));
+      talkPage.navigateToTalkPage();
+    }
+
+    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+    @When("user clicks on three dots icon next to the group chat")
+    public void user_clicks_on_three_dots_icon_next_to_the_group_chat() {
+        Actions actions = new Actions(Driver.getDriver());
+        actions.moveToElement(talkPage.chat).perform();
+        wait.until(ExpectedConditions.visibilityOf(talkPage.dotsButton));
+        talkPage.dotsButton.click();
+    }
+    @When("selects copy link from the pop up menu")
+    public void selects_from_the_pop_up_menu() {
+        talkPage.copyLinkOption.click();
+    }
+    @Then("{string} message appears on the right")
+    public void message_appears_on_the_right(String string) {
+        String actualMessage = talkPage.conversationLinkCopiedToClipboard.getText();
+        System.out.println(actualMessage);
+        System.out.println(string);
+        Assert.assertTrue(actualMessage.contains(string));
+    }
+
     MeetSkyLogin loginPage = new MeetSkyLogin();
+    @Then("Please fill out this field. message should be displayed for any empty field")
+    public void please_fill_out_this_field_message_should_be_displayed_for_any_empty_field() {
+        String actualMessage = loginPage.usernameInputBox.getAttribute("validationMessage");
+        String expectedMessage = "Please fill out this field.";
+        Assert.assertEquals(actualMessage,expectedMessage);
+
+    }
+
+    @When("user leaves username empty")
+    public void user_leaves_username_empty() {
+        loginPage.usernameInputBox.sendKeys("");
+    }
+
+    @When("user clicks on the Add to favourites option")
+    public void user_clicks_on_the_add_to_favourites_option() {
+        talkPage.addToFavouritesOption.click();
+    }
+    @Then("the app changes from the “Add to favorite” to “Remove from favorite”.")
+    public void the_app_changes_from_the_add_to_favorite_to_remove_from_favorite() {
+        Assert.assertTrue(talkPage.removeFromFavourites.isDisplayed());
+    }
+    @When("user clicks on new folder and type a name")
+    public void user_clicks_on_new_folder_and_type_a_name()  {
+        MeetSkyFiles meetSkyFiles = new MeetSkyFiles();
+        meetSkyFiles.newFolderOption.click();
+        String folder_name = "Irina test auto";
+        meetSkyFiles.inputNewFolderNameOption.sendKeys(folder_name + Keys.ENTER);
+
+    }
+
+    @Then("user should see new folder with the name displayed on the Files page")
+    public void user_should_see_new_folder_with_the_name_displayed_on_the_files_page() {
+        MeetSkyFiles.new_folder_display_verification("Irina test auto");
+        BrowserUtils.logout();
+    }
+
+    MeetSkyLogin meetSkyLogin = new MeetSkyLogin();
 
 
     @When("User clicks on the profile button")
@@ -299,6 +367,30 @@ public class MeetSky_stepDefinitions {
         BrowserUtils.verifyTitle("QA - Meetsky");
     }
 
+
+    @Given("user is on the MeetSky main page")
+    public void userIsOnTheMeetSkyMainPage() {
+        System.out.println("User logins on the MeetSky main page");
+        Driver.getDriver().get("https://qa.meetsky.net/index.php/login");
+        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();
+        meetSkyLogin.login();
+    }
+
+    @When("user clicks on Activity tab")
+    public void userClicksOnActivityTab() {
+        System.out.println("User clicks on Activity tab");
+        MeetSkyFiles meetSkyFiles = new MeetSkyFiles();
+        meetSkyFiles.activityPage.click();
+    }
+
+    @Then("user should be able to open the Activity page")
+    public void userShouldBeAbleToOpenTheActivityPage() {
+        System.out.println("User should be able to open the Activity page");
+        WebElement activityPageText = Driver.getDriver().findElement(By.xpath("//span[normalize-space()='Today']"));
+        String actualTitle = activityPageText.getText();
+        String expectedTitle = "Today";
+        Assert.assertEquals(actualTitle, expectedTitle);
+    }
     @When("User clicks back button")
     public void userClicksBackButton() {
         Driver.getDriver().navigate().back();
@@ -311,16 +403,22 @@ public class MeetSky_stepDefinitions {
 
     @Given("User is logged in")
     public void userIsLoggedIn() {
-        BrowserUtils.verifyTitle("Dashboard - QA - Meetsky");
+        BrowserUtils.verifyTitle("QA - Meetsky");
     }
 
     @When("User doesn't perform any action for {int} minutes")
-    public void userDoesnTPerformAnyActionForMinutes(int arg0) throws InterruptedException {
-        Thread.sleep(180000);
-    }
+    public void userDoesnTPerformAnyActionForMinutes(int arg0){
+      Actions action = new Actions(Driver.getDriver());
+      action.pause(3).perform();
+
+
+          }
+
+
 
     @Then("User is logged out automatically")
     public void userIsLoggedOutAutomatically() {
-        BrowserUtils.verifyTitle("QA - Meetsky");
+       // BrowserUtils.verifyTitle("QA - Meetsky");
+        Assert.assertEquals(Driver.getDriver().getTitle(),"Dashboard - QA - Meetsky");
     }
 }

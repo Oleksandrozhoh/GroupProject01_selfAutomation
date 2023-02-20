@@ -23,7 +23,12 @@ Feature: Login page features
     Then user should see the warning message - Wrong username or password
 
 
-#  Scenario: 3.Please fill out this field. message should be displayed for any empty field
+  Scenario: 3.Please fill out this field. message should be displayed for any empty field
+
+    Given user is at the login page
+    When user leaves username empty
+    And clicks login button
+    Then Please fill out this field. message should be displayed for any empty field
 
 
   Scenario: 4.The password text box displays the characters entered by a user as bullet point

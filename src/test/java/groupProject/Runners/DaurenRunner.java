@@ -4,12 +4,14 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
+
 @RunWith(Cucumber.class)
 @CucumberOptions(
-    features = "src/test/resources/features",
+        features = "src/test/resources/features",
         glue = "groupProject/step_definitions",
         dryRun = false,
-        tags = "@AwayFromTheKeyboard"
-        )
-public class BladeRunner {
+        tags = "@piw"
+)
+
+public class DaurenRunner {
 }
