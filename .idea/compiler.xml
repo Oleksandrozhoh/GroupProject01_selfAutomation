@@ -9,5 +9,8 @@
         <module name="GroupProject01_selfAutomation" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="GroupProject01_selfAutomation" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

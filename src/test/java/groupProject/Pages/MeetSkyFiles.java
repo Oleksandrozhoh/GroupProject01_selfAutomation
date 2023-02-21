@@ -25,7 +25,7 @@ public class MeetSkyFiles {
     public WebElement plusButton;
 
     ////span[.='Upload file']
-    @FindBy (xpath = "//input[@class='max_human_file_size']")
+    @FindBy (xpath = "//input[@type='file']")
     public WebElement uploadFileOption;
 
     @FindBy (xpath = "//span[.='New folder']")
@@ -64,6 +64,9 @@ public class MeetSkyFiles {
 
     @FindBy (xpath = "//input[@type='file']")
     public WebElement uploadFileTag;
+
+    @FindBy (xpath = "//span[@class='innernametext']")
+    public List<WebElement> allFileAndFolderNames;
 
 
 }

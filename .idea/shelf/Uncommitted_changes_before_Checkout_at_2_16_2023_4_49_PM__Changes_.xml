@@ -1,0 +1,9 @@
+<changelist name="Uncommitted_changes_before_Checkout_at_2_16_2023_4_49_PM_[Changes]" date="1676587759454" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_16_2023_4_49_PM_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 2/16/2023 4:49 PM [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/test-classes/groupProject/step_definitions/MeetSky_stepDefinitions.class" />
+    <option name="AFTER_PATH" value="target/test-classes/groupProject/step_definitions/MeetSky_stepDefinitions.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2_16_2023_4_49_PM_[Changes]/MeetSky_stepDefinitions.class" />
+  </binary>
+</changelist>

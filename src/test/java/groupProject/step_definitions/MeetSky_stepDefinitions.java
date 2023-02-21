@@ -29,16 +29,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MeetSky_stepDefinitions {
+
+    MeetSkyFiles filesPage = new MeetSkyFiles();
+    MeetSkyLogin meetSkyLogin = new MeetSkyLogin();
+    MeetSkyDashboard dashboard = new MeetSkyDashboard();
+    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+
     @Given("user are at the home page.")
     public void user_are_at_the_home_page() {
         Driver.getDriver().get("https://qa.meetsky.net/index.php/login");
-        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();
         meetSkyLogin.login();
     }
 
     @When("user clicks on the Files module..")
     public void user_clicks_on_the_files_module() {
-        MeetSkyDashboard dashboard = new MeetSkyDashboard();
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.elementToBeClickable(dashboard.filesButton));
         dashboard.filesButton.click();
@@ -46,16 +50,13 @@ public class MeetSky_stepDefinitions {
 
     @Then("user launched to the Files page")
     public void user_launched_to_the_files_page() {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleIs("Files - QA - Meetsky"));
     }
 
     @When("user clicks on any file or folder checkbox")
     public void user_clicks_on_any_file_or_folder_checkbox() {
-
         SoftAssert softAssert = new SoftAssert();
-        MeetSkyFiles files = new MeetSkyFiles();
-        for (WebElement eachCheckbox : files.allFilesAndFOldersCheckboxes) {
+        for (WebElement eachCheckbox : filesPage.allFilesAndFOldersCheckboxes) {
             eachCheckbox.click();
             softAssert.assertTrue(eachCheckbox.isSelected());
         }
@@ -68,15 +69,13 @@ public class MeetSky_stepDefinitions {
 
     @When("User should be able to click the Select All checkbox.")
     public void user_should_be_able_to_click_the_checkbox() {
-        MeetSkyFiles files = new MeetSkyFiles();
-        files.selectAllCheckbox.click();
+        filesPage.selectAllCheckbox.click();
     }
 
     @Then("User should see all the files and folders checkboxes selected automatically.")
     public void user_should_see_all_the_files_and_folders_checkboxes_selected_automatically() {
         SoftAssert softAssert = new SoftAssert();
-        MeetSkyFiles files = new MeetSkyFiles();
-        for (WebElement each : files.allFilesAndFOldersCheckboxes) {
+        for (WebElement each : filesPage.allFilesAndFOldersCheckboxes) {
             softAssert.assertTrue(each.isSelected());
         }
         BrowserUtils.logout();
@@ -96,26 +95,24 @@ public class MeetSky_stepDefinitions {
 
     @When("user clicks on the + icon")
     public void user_clicks_on_the_icon() {
-        MeetSkyFiles filesPage = new MeetSkyFiles();
         filesPage.plusButton.click();
     }
 
 
-    MeetSkyFiles filesPage = new MeetSkyFiles();
+
     @When("user select upload file from pop up menu")
     public void user_select_from_pop_up_menu() {
-
-        filesPage.uploadFileOption.sendKeys("\"C:\\Users\\oleks\\OneDrive\\Desktop\\Screenshots\\251077486_227333759502218_5718729936563081174_n.jpg\"");
-    }
-
-    @When("user choose file and clicks open button")
-    public void user_choose_file_and_clicks_button() {
-        filesPage.uploadFileTag.sendKeys("\"C:\\Users\\oleks\\OneDrive\\Desktop\\Screenshots\\435.jpg\"");
+        filesPage.uploadFileOption.sendKeys("C:\\Users\\oleks\\OneDrive\\Desktop\\Screenshots\\Screenshot_1.png");
     }
 
     @Then("file name should be displayed on the file page after successful upload.")
     public void file_name_should_be_displayed_on_the_file_page_after_successful_upload() {
-
+        for (WebElement eachName : filesPage.allFileAndFolderNames) {
+            if (eachName.getText().equals("Screenshot_1")){
+                Assert.assertEquals(eachName.getText(),"Screenshot_1");
+            }
+        }
+        BrowserUtils.logout();
     }
 
     @When("user clicks on the 3 dots icon")
@@ -308,8 +305,6 @@ public class MeetSky_stepDefinitions {
         Driver.getDriver().get(ConfigurationReader.getProperty("meetSkyURL"));
         talkPage.navigateToTalkPage();
     }
-
-    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
 
 
     Actions actions = new Actions(Driver.getDriver());

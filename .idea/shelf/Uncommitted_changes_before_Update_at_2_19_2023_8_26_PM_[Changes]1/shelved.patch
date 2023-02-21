@@ -1,0 +1,373 @@
+Index: src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package groupProject.step_definitions;\r\n\r\nimport groupProject.Pages.MeetSkyDashboard;\r\nimport groupProject.Pages.MeetSkyFiles;\r\nimport groupProject.Pages.MeetSkyGroupChat;\r\nimport groupProject.Pages.MeetSkyLogin;\r\nimport groupProject.Utilities.BrowserUtils;\r\nimport groupProject.Utilities.ConfigurationReader;\r\nimport groupProject.Utilities.Driver;\r\nimport io.cucumber.java.en.Given;\r\nimport io.cucumber.java.en.Then;\r\nimport io.cucumber.java.en.When;\r\nimport org.junit.Assert;\r\nimport org.openqa.selenium.By;\r\nimport org.openqa.selenium.Keys;\r\nimport org.openqa.selenium.WebDriver;\r\nimport org.openqa.selenium.WebElement;\r\nimport org.openqa.selenium.interactions.Actions;\r\nimport org.openqa.selenium.support.ui.ExpectedConditions;\r\nimport org.openqa.selenium.support.ui.WebDriverWait;\r\nimport org.testng.asserts.SoftAssert;\r\n\r\nimport java.io.File;\r\nimport java.time.Duration;\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.List;\r\n\r\npublic class MeetSky_stepDefinitions {\r\n    @Given(\"user are at the home page.\")\r\n    public void user_are_at_the_home_page() {\r\n        Driver.getDriver().get(\"https://qa.meetsky.net/index.php/login\");\r\n        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();\r\n        meetSkyLogin.login();\r\n    }\r\n\r\n    @When(\"user clicks on the Files module..\")\r\n    public void user_clicks_on_the_files_module() {\r\n        MeetSkyDashboard dashboard = new MeetSkyDashboard();\r\n        WebDriverWait wait = new WebDriverWait(Driver.getDriver(),Duration.ofSeconds(10));\r\n        wait.until(ExpectedConditions.elementToBeClickable(dashboard.filesButton));\r\n        dashboard.filesButton.click();\r\n    }\r\n\r\n    @Then(\"user launched to the Files page\")\r\n    public void user_launched_to_the_files_page() {\r\n        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));\r\n        wait.until(ExpectedConditions.titleIs(\"Files - QA - Meetsky\"));\r\n    }\r\n    @When(\"user clicks on any file or folder checkbox\")\r\n    public void user_clicks_on_any_file_or_folder_checkbox() {\r\n\r\n        SoftAssert softAssert = new SoftAssert();\r\n        MeetSkyFiles files = new MeetSkyFiles();\r\n        for (WebElement eachCheckbox : files.allFilesAndFOldersCheckboxes) {\r\n            eachCheckbox.click();\r\n            softAssert.assertTrue(eachCheckbox.isSelected());\r\n        }\r\n    }\r\n\r\n    @Then(\"User should see the checkbox selected indicating that the file or folder is selected.\")\r\n    public void user_should_see_the_checkbox_selected_indicating_that_the_file_or_folder_is_selected() {\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n    @When(\"User should be able to click the Select All checkbox.\")\r\n    public void user_should_be_able_to_click_the_checkbox() {\r\n        MeetSkyFiles files = new MeetSkyFiles();\r\n        files.selectAllCheckbox.click();\r\n    }\r\n    @Then(\"User should see all the files and folders checkboxes selected automatically.\")\r\n    public void user_should_see_all_the_files_and_folders_checkboxes_selected_automatically() {\r\n        SoftAssert softAssert = new SoftAssert();\r\n        MeetSkyFiles files = new MeetSkyFiles();\r\n        for (WebElement each : files.allFilesAndFOldersCheckboxes) {\r\n            softAssert.assertTrue(each.isSelected());\r\n        }\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n\r\n    @Given(\"User is at the file page\")\r\n    public void user_is_at_the_file_page() {\r\n        Driver.getDriver().get(\"https://qa.meetsky.net/\");\r\n        MeetSkyLogin login = new MeetSkyLogin();\r\n        login.login();\r\n\r\n        MeetSkyDashboard dashboard = new MeetSkyDashboard();\r\n        dashboard.goToFiles();\r\n\r\n    }\r\n    @When(\"user clicks on the + icon\")\r\n    public void user_clicks_on_the_icon() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        filesPage.plusButton.click();\r\n    }\r\n\r\n    MeetSkyFiles filesPage = new MeetSkyFiles();\r\n    @When(\"user select upload file from pop up menu\")\r\n    public void user_select_from_pop_up_menu() {\r\n\r\n        filesPage.uploadFileOption.sendKeys(\"\\\"C:\\\\Users\\\\oleks\\\\OneDrive\\\\Desktop\\\\Screenshots\\\\251077486_227333759502218_5718729936563081174_n.jpg\\\"\");\r\n    }\r\n    @When(\"user choose file and clicks open button\")\r\n    public void user_choose_file_and_clicks_button() {\r\n        filesPage.uploadFileTag.sendKeys(\"\\\"C:\\\\Users\\\\oleks\\\\OneDrive\\\\Desktop\\\\Screenshots\\\\435.jpg\\\"\");\r\n    }\r\n    @Then(\"file name should be displayed on the file page after successful upload.\")\r\n    public void file_name_should_be_displayed_on_the_file_page_after_successful_upload() {\r\n\r\n    }\r\n\r\n    @When(\"user clicks on the 3 dots icon\")\r\n    public void user_clicks_on_the_dots_icon() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        filesPage.treeDotsIcon_2ndRow.click();\r\n    }\r\n    @When(\"user select rename from pop up menu\")\r\n    public void user_select_rename_from_pop_up_menu() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        filesPage.renameOption.click();\r\n    }\r\n    @When(\"user types new file name\")\r\n    public void user_types_new_file_name() {\r\n        Actions actions = new Actions(Driver.getDriver());\r\n        actions.sendKeys(\"renamed\"+ Keys.ENTER).perform();\r\n    }\r\n    @Then(\"file name should be different after renaming it\")\r\n    public void file_name_should_be_different_after_renaming_it() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        List <String> allFileNames = new ArrayList<>();\r\n        String expectedName = \"renamed\";\r\n        for (WebElement eachFileName : filesPage.listOfFIleNames) {\r\n            allFileNames.add(eachFileName.getText());\r\n            }\r\n        Assert.assertTrue(allFileNames.contains(expectedName));\r\n        BrowserUtils.logout();\r\n        }\r\n\r\n\r\n    @When(\"user select download from pop up menu\")\r\n    public void user_select_download_from_pop_up_menu() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        filesPage.downloadOption.click();\r\n    }\r\n\r\n    @Then(\"file should be downloaded to users computer\")\r\n    public void file_should_be_downloaded_to_users_computer() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        File file = new File(\"C:\\\\Users\\\\oleks\\\\Downloads\\\\\"+filesPage.fileNameSecondRow.getText()+\".zip\");\r\n        BrowserUtils.logout();\r\n        Assert.assertTrue(file.exists());\r\n\r\n    }\r\n\r\n    @Given(\"user is at the login page\")\r\n    public void user_is_at_the_login_page() {\r\n        Driver.getDriver().get(ConfigurationReader.getProperty(\"meetSkyURL\"));\r\n    }\r\n    @When(\"enters valid username to username input box\")\r\n    public void enters_valid_username_to_username_input_box() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        loginPage.usernameInputBox.sendKeys(ConfigurationReader.getProperty(\"meetSkyUsername\"));\r\n    }\r\n    @When(\"enters valid password to password input box\")\r\n    public void enters_valid_password_to_password_input_box() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        loginPage.passwordInputBox.sendKeys(ConfigurationReader.getProperty(\"meetSkyPassword\"));\r\n    }\r\n    @When(\"clicks login button\")\r\n    public void clicks_login_button() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        loginPage.loginButton.click();\r\n    }\r\n    @Then(\"land on the Dashboard page after successful login.\")\r\n    public void land_on_the_page_after_successful_login() {\r\n        String actualTitle = Driver.getDriver().getTitle();\r\n        String expectedTitle = \"Dashboard\";\r\n        Assert.assertTrue(actualTitle.contains(expectedTitle));\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n    @When(\"enters invalid username to username input box\")\r\n    public void enters_invalid_username_to_username_input_box() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        loginPage.usernameInputBox.sendKeys(\"InvalidUsername\");\r\n    }\r\n    @Then(\"user should see the warning message - Wrong username or password\")\r\n    public void user_should_see_the_warning_message_invalid_username_or_password() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        String actualMessage = loginPage.wrongUsernameOrPasswordMessage.getText();\r\n        String expectedText = \"Wrong username or password.\";\r\n        Assert.assertTrue(actualMessage.contains(expectedText));\r\n    }\r\n\r\n    @When(\"enters password to password input box\")\r\n    public void enters_password_to_password_input_box() {\r\n       MeetSkyLogin loginPage = new MeetSkyLogin();\r\n       loginPage.passwordInputBox.sendKeys(\"mySecretPassword\");\r\n    }\r\n    @Then(\"password text box displays the characters entered by a user as bullet point\")\r\n    public void password_text_box_displays_the_characters_entered_by_a_user_as_bullet_point() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        String typeAttributeValue = loginPage.passwordInputBox.getAttribute(\"type\");\r\n        Assert.assertEquals(\"password\",typeAttributeValue);\r\n\r\n    }\r\n//  --------------------------------------------------------\r\n        MeetSkyGroupChat meetSkyGroupChat= new MeetSkyGroupChat();\r\n    @Given(\"User is at the talk page\")\r\n    public void user_is_at_the_talk_page(){\r\n\r\n        Driver.getDriver().get(\"https://qa.meetsky.net/index.php/login\");\r\n        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();\r\n        meetSkyLogin.login();\r\n        BrowserUtils.sleep(4);\r\n        meetSkyGroupChat.talkButton.click();\r\n\r\n\r\n    }\r\n    @When(\"User clicks on the create button and to write a channel name\")\r\n    public void user_clicks_on_the_create_button_and_to_write_a_channel_name() {\r\n    meetSkyGroupChat.createChatButton.click();\r\n    BrowserUtils.sleep(2);\r\n    meetSkyGroupChat.conversationName.sendKeys(\"test chat\"+Keys.ENTER);\r\n    }\r\n    @When(\"User able to add all the users by searching and selecting\")\r\n    public void user_able_to_add_all_the_users_by_searching_and_selecting() {\r\n    meetSkyGroupChat.searchParticipants.sendKeys(\"admin\");\r\n    BrowserUtils.sleep(1);\r\n    meetSkyGroupChat.participant.click();\r\n\r\n    BrowserUtils.sleep(1);\r\n    meetSkyGroupChat.searchParticipants.clear(); // clear the contents of the input field\r\n        BrowserUtils.sleep(1);\r\n\r\n        meetSkyGroupChat.searchParticipants.sendKeys(\"User10\");\r\n        BrowserUtils.sleep(1);\r\n        meetSkyGroupChat.participant.click();\r\n\r\n\r\n        BrowserUtils.sleep(2);\r\n        meetSkyGroupChat.conversationButton.click();\r\n\r\n    }\r\n    @Then(\"User should see the group channel name\")\r\n    public void user_should_see_the_group_channel_name() {\r\n        String expectedResult = \"test chat\";\r\n        String actualResult = meetSkyGroupChat.groupChatName.getText();\r\n        Assert.assertEquals(actualResult,expectedResult);\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n    @When(\"User clicks on the dots button\")\r\n    public void user_clicks_on_the_dots_button() {\r\n        Actions actions = new Actions(Driver.getDriver());\r\n        WebElement chat = Driver.getDriver().findElement(By.xpath(\"//div[@class='list-item-content__wrapper'][1]\"));\r\n        actions.moveToElement(chat)\r\n                .pause(3).perform();\r\n        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));\r\n        wait.until(ExpectedConditions.visibilityOf(meetSkyGroupChat.dotsButton));\r\n        wait.until(ExpectedConditions.elementToBeClickable(meetSkyGroupChat.dotsButton));\r\n        meetSkyGroupChat.dotsButton.click();\r\n    }\r\n\r\n\r\n    @Then(\"user able to see {int} actions to do with channel\")\r\n    public void user_able_to_see_actions_to_do_with_channel(Integer int1) {\r\n        List<String> actual = new ArrayList<>();\r\n        for (WebElement action : meetSkyGroupChat.channelActions) {\r\n            BrowserUtils.sleep(3);\r\n            System.out.println(\"action.getText() = \" + action.getText());\r\n           actual.add(action.getText());\r\n\r\n        }\r\n\r\n      List<String> expected = new ArrayList<>(Arrays.asList(\"Add to favourites\",\"Copy link\",\"Chat notifications\",\"All messages\",\"@-mentions only\",\"off\",\"Leave conversation\",\"Delete conversation\"));\r\n      // Assert.assertEquals(actual,expected);// test should be fail cause there is 2 actions missing on the page\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n    MeetSkyGroupChat talkPage = new MeetSkyGroupChat();\r\n    @Given(\"user are in the talk page\")\r\n    public void user_are_in_the_talk_page() {\r\n        Driver.getDriver().get(ConfigurationReader.getProperty(\"meetSkyURL\"));\r\n      talkPage.navigateToTalkPage();\r\n    }\r\n\r\n    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));\r\n\r\n    Actions actions = new Actions(Driver.getDriver());\r\n    @When(\"user clicks on three dots icon next to the group chat\")\r\n    public void user_clicks_on_three_dots_icon_next_to_the_group_chat() {\r\n        actions.moveToElement(talkPage.chat).perform();\r\n        wait.until(ExpectedConditions.visibilityOf(talkPage.dotsButton));\r\n        talkPage.dotsButton.click();\r\n    }\r\n    @When(\"selects copy link from the pop up menu\")\r\n    public void selects_from_the_pop_up_menu() {\r\n        talkPage.copyLinkOption.click();\r\n    }\r\n    @Then(\"{string} message appears on the right\")\r\n    public void message_appears_on_the_right(String string) {\r\n        String actualMessage = talkPage.conversationLinkCopiedToClipboard.getText();\r\n        System.out.println(actualMessage);\r\n        System.out.println(string);\r\n        Assert.assertTrue(actualMessage.contains(string));\r\n    }\r\n\r\n    MeetSkyLogin loginPage = new MeetSkyLogin();\r\n    @Then(\"Please fill out this field. message should be displayed for any empty field\")\r\n    public void please_fill_out_this_field_message_should_be_displayed_for_any_empty_field() {\r\n        String actualMessage = loginPage.usernameInputBox.getAttribute(\"validationMessage\");\r\n        String expectedMessage = \"Please fill out this field.\";\r\n        Assert.assertEquals(actualMessage,expectedMessage);\r\n\r\n    }\r\n\r\n    @When(\"user leaves username empty\")\r\n    public void user_leaves_username_empty() {\r\n        loginPage.usernameInputBox.sendKeys(\"\");\r\n    }\r\n\r\n    @When(\"user clicks on the Add to favourites option\")\r\n    public void user_clicks_on_the_add_to_favourites_option() {\r\n        if (talkPage.starIcon.isDisplayed()){\r\n            talkPage.removeFromFavourites.click();\r\n        }\r\n        talkPage.addToFavouritesOption.click();\r\n    }\r\n    @Then(\"the app changes from the “Add to favorite” to “Remove from favorite”.\")\r\n    public void the_app_changes_from_the_add_to_favorite_to_remove_from_favorite() {\r\n        Assert.assertTrue(talkPage.removeFromFavourites.isDisplayed());\r\n        BrowserUtils.logout();\r\n    }\r\n    @When(\"user clicks on new folder and type a name\")\r\n    public void user_clicks_on_new_folder_and_type_a_name()  {\r\n        MeetSkyFiles meetSkyFiles = new MeetSkyFiles();\r\n        meetSkyFiles.newFolderOption.click();\r\n        String folder_name = \"Irina test auto\";\r\n        meetSkyFiles.inputNewFolderNameOption.sendKeys(folder_name + Keys.ENTER);\r\n\r\n    }\r\n\r\n    @Then(\"user should see new folder with the name displayed on the Files page\")\r\n    public void user_should_see_new_folder_with_the_name_displayed_on_the_files_page() {\r\n        MeetSkyFiles.new_folder_display_verification(\"Irina test auto\");\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n\r\n\r\n    @Given(\"user is on the MeetSky main page\")\r\n    public void userIsOnTheMeetSkyMainPage() {\r\n        System.out.println(\"User logins on the MeetSky main page\");\r\n        Driver.getDriver().get(\"https://qa.meetsky.net/index.php/login\");\r\n        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();\r\n        meetSkyLogin.login();\r\n    }\r\n\r\n    @When(\"user clicks on Activity tab\")\r\n    public void userClicksOnActivityTab() {\r\n        System.out.println(\"User clicks on Activity tab\");\r\n        MeetSkyFiles meetSkyFiles = new MeetSkyFiles();\r\n        meetSkyFiles.activityPage.click();\r\n    }\r\n\r\n    @Then(\"user should be able to open the Activity page\")\r\n    public void userShouldBeAbleToOpenTheActivityPage() {\r\n        System.out.println(\"User should be able to open the Activity page\");\r\n        WebElement activityPageText = Driver.getDriver().findElement(By.xpath(\"//span[normalize-space()='Today']\"));\r\n        String actualTitle = activityPageText.getText();\r\n        String expectedTitle = \"Today\";\r\n        Assert.assertEquals(actualTitle, expectedTitle);\r\n        BrowserUtils.logout();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java b/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java
+--- a/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java	(revision 01a4eace44db735a2e01cfb9b495ffbbc3946b26)
++++ b/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java	(date 1676739800314)
+@@ -60,7 +60,7 @@
+ 
+     @Then("User should see the checkbox selected indicating that the file or folder is selected.")
+     public void user_should_see_the_checkbox_selected_indicating_that_the_file_or_folder_is_selected() {
+-        BrowserUtils.logout();
++
+     }
+ 
+     @When("User should be able to click the Select All checkbox.")
+@@ -75,7 +75,7 @@
+         for (WebElement each : files.allFilesAndFOldersCheckboxes) {
+             softAssert.assertTrue(each.isSelected());
+         }
+-        BrowserUtils.logout();
++
+     }
+ 
+ 
+@@ -134,7 +134,6 @@
+             allFileNames.add(eachFileName.getText());
+             }
+         Assert.assertTrue(allFileNames.contains(expectedName));
+-        BrowserUtils.logout();
+         }
+ 
+ 
+@@ -164,12 +163,10 @@
+     }
+     @When("enters valid password to password input box")
+     public void enters_valid_password_to_password_input_box() {
+-        MeetSkyLogin loginPage = new MeetSkyLogin();
+         loginPage.passwordInputBox.sendKeys(ConfigurationReader.getProperty("meetSkyPassword"));
+     }
+     @When("clicks login button")
+     public void clicks_login_button() {
+-        MeetSkyLogin loginPage = new MeetSkyLogin();
+         loginPage.loginButton.click();
+     }
+     @Then("land on the Dashboard page after successful login.")
+@@ -177,17 +174,17 @@
+         String actualTitle = Driver.getDriver().getTitle();
+         String expectedTitle = "Dashboard";
+         Assert.assertTrue(actualTitle.contains(expectedTitle));
+-        BrowserUtils.logout();
++
+     }
+ 
+     @When("enters invalid username to username input box")
+     public void enters_invalid_username_to_username_input_box() {
+-        MeetSkyLogin loginPage = new MeetSkyLogin();
+         loginPage.usernameInputBox.sendKeys("InvalidUsername");
+     }
++
+     @Then("user should see the warning message - Wrong username or password")
+     public void user_should_see_the_warning_message_invalid_username_or_password() {
+-        MeetSkyLogin loginPage = new MeetSkyLogin();
++       wait.until(ExpectedConditions.visibilityOf(loginPage.wrongUsernameOrPasswordMessage));
+         String actualMessage = loginPage.wrongUsernameOrPasswordMessage.getText();
+         String expectedText = "Wrong username or password.";
+         Assert.assertTrue(actualMessage.contains(expectedText));
+@@ -276,7 +273,7 @@
+ 
+       List<String> expected = new ArrayList<>(Arrays.asList("Add to favourites","Copy link","Chat notifications","All messages","@-mentions only","off","Leave conversation","Delete conversation"));
+       // Assert.assertEquals(actual,expected);// test should be fail cause there is 2 actions missing on the page
+-        BrowserUtils.logout();
++
+     }
+ 
+     MeetSkyGroupChat talkPage = new MeetSkyGroupChat();
+@@ -331,7 +328,7 @@
+     @Then("the app changes from the “Add to favorite” to “Remove from favorite”.")
+     public void the_app_changes_from_the_add_to_favorite_to_remove_from_favorite() {
+         Assert.assertTrue(talkPage.removeFromFavourites.isDisplayed());
+-        BrowserUtils.logout();
++
+     }
+     @When("user clicks on new folder and type a name")
+     public void user_clicks_on_new_folder_and_type_a_name()  {
+@@ -345,7 +342,7 @@
+     @Then("user should see new folder with the name displayed on the Files page")
+     public void user_should_see_new_folder_with_the_name_displayed_on_the_files_page() {
+         MeetSkyFiles.new_folder_display_verification("Irina test auto");
+-        BrowserUtils.logout();
++
+     }
+ 
+ 
+@@ -372,6 +369,5 @@
+         String actualTitle = activityPageText.getText();
+         String expectedTitle = "Today";
+         Assert.assertEquals(actualTitle, expectedTitle);
+-        BrowserUtils.logout();
+     }
+ }
+Index: src/test/resources/features/MeetSky_AccessPhotoPage.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@Regression\r\nFeature: photo page functionality\r\n  user story:As a user, I should be able to access to the photo page.\r\n\r\n\r\n  Scenario:1.Verify the user can access to the photo page\r\n Given user are at the home page.\r\n When  user clicks on the  photo .\r\n Then  user should be able to access to the photo page.\r\n\r\n\r\nScenario: Verify the users see 6 options in the Photos page as shown in the design.\r\n  Given user at photo page.\r\n  Then user clicks on the navigation button.\r\n\r\n\r\n\r\n  Scenario: Verify the “Photo View” .\r\n\r\n    When user at photo page.\r\n    Then user can see photo view\r\n\r\n    Scenario: checkbox under the Settings on the Photos page.\r\n      When user at photo page.\r\n      Then user can see checkbox under settings
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/MeetSky_AccessPhotoPage.feature b/src/test/resources/features/MeetSky_AccessPhotoPage.feature
+--- a/src/test/resources/features/MeetSky_AccessPhotoPage.feature	(revision 01a4eace44db735a2e01cfb9b495ffbbc3946b26)
++++ b/src/test/resources/features/MeetSky_AccessPhotoPage.feature	(date 1676736574411)
+@@ -4,22 +4,20 @@
+ 
+ 
+   Scenario:1.Verify the user can access to the photo page
+- Given user are at the home page.
+- When  user clicks on the  photo .
+- Then  user should be able to access to the photo page.
++    Given user are at the home page.
++    When  user clicks on the  photo .
++    Then  user should be able to access to the photo page.
+ 
+ 
+-Scenario: Verify the users see 6 options in the Photos page as shown in the design.
+-  Given user at photo page.
+-  Then user clicks on the navigation button.
++  Scenario: Verify the users see 6 options in the Photos page as shown in the design.
++    Given user at photo page.
++    Then user clicks on the navigation button.
+ 
+ 
+-
+   Scenario: Verify the “Photo View” .
+-
+     When user at photo page.
+     Then user can see photo view
+ 
+-    Scenario: checkbox under the Settings on the Photos page.
+-      When user at photo page.
+-      Then user can see checkbox under settings
+\ No newline at end of file
++  Scenario: checkbox under the Settings on the Photos page.
++    When user at photo page.
++    Then user can see checkbox under settings
+\ No newline at end of file
+Index: src/test/java/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package groupProject.step_definitions;\r\n\r\nimport groupProject.Pages.MeetSkyPhotosPage;\r\nimport groupProject.Utilities.BrowserUtils;\r\nimport groupProject.Utilities.Driver;\r\nimport io.cucumber.java.en.Then;\r\nimport io.cucumber.java.en.When;\r\nimport org.junit.Assert;\r\n\r\npublic class MeetSky_AccessPhotoPage_stepDefinitions {\r\n // Driver.getDriver().get(\"https://qa.meetsky.net/index.php/login\");\r\n    MeetSkyPhotosPage meetSkyPhotosPage = new MeetSkyPhotosPage();\r\n    @When(\"user clicks on the  photo .\")\r\n    public void user_clicks_on_the_photo() {\r\n        System.out.println(\"user clicks on photo \");\r\n\r\n        Driver.getDriver().get(\"https://qa.meetsky.net/index.php/login\");\r\n       MeetSkyPhotosPage meetSkyPhotosPage=new MeetSkyPhotosPage();\r\n       meetSkyPhotosPage.photo.click();\r\n\r\n\r\n\r\n\r\n    }\r\n    @Then(\"user should be able to access to the photo page.\")\r\n    public void user_should_be_able_to_access_to_the_photo_page() {\r\n\r\n        System.out.println(\"user access photo page!\");\r\n        String expectedTitle=\"Photos - QA - Meetsky\";\r\n        String actualTitle=Driver.getDriver().getTitle();\r\n        Assert.assertEquals(\"Title verification!\",expectedTitle,actualTitle);\r\n\r\n\r\n\r\n    }\r\n    @When(\"user at photo page.\")\r\n    public void user_at_photo_page() {\r\n\r\n        System.out.println(\"User already on photo page !\");\r\n\r\n        Driver.getDriver().get(\"https://qa.meetsky.net/index.php/login\");\r\n        MeetSkyPhotosPage meetSkyPhotosPage=new MeetSkyPhotosPage();\r\n        meetSkyPhotosPage.photo.click();\r\n\r\n    }\r\n\r\n    @Then(\"user clicks on the navigation button.\")\r\n    public void user_clicks_on_the_navigation_button() {\r\n        System.out.println(\"user clicks on the navigation button.\");\r\n\r\n        Driver.getDriver().get(\"https://qa.meetsky.net/index.php/login\");\r\n        MeetSkyPhotosPage meetSkyPhotosPage=new MeetSkyPhotosPage();\r\n        meetSkyPhotosPage.photo.click();\r\n        meetSkyPhotosPage.navigationButton.click();\r\n\r\n    }\r\n\r\n    @Then(\"user can see photo view\")\r\n    public void userCanSeePhotoView() {\r\n\r\n        System.out.println(\"photo view verification\");\r\n        meetSkyPhotosPage.photo.click();\r\n        meetSkyPhotosPage.navigationButton.click();\r\n       meetSkyPhotosPage.view.getText();\r\n\r\n\r\n    }\r\n\r\n    @Then(\"user can see checkbox under settings\")\r\n    public void userCanSeeCheckboxUnderSettings() {\r\n        System.out.println(\"checkBox exist verification!\");\r\n\r\n        meetSkyPhotosPage.settingButton.click();\r\n\r\n\r\n\r\n\r\n\r\n       BrowserUtils.logout();\r\n    }\r\n}\r\n\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.java b/src/test/java/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.java
+--- a/src/test/java/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.java	(revision 01a4eace44db735a2e01cfb9b495ffbbc3946b26)
++++ b/src/test/java/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.java	(date 1676736912598)
+@@ -76,7 +76,7 @@
+ 
+ 
+ 
+-       BrowserUtils.logout();
++
+     }
+ }
+ 
+Index: src/test/resources/features/MeetSky_UploadAndDownload.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@Regression\r\nFeature: Upload and Download feature\r\n\r\n  User story:\r\n  As a user, I should be able to manage a file.\r\n  @UploadFunctionality\r\n  Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page.\r\n - File name should be displayed on the file page after successful upload.\r\n\r\n    Given User is at the file page\r\n    When user clicks on the + icon\r\n    And user select upload file from pop up menu\r\n     And user choose file and clicks open button\r\n    Then file name should be displayed on the file page after successful upload.\r\n\r\n  @RenameFunctionality\r\n    Scenario: 2.Verify the users can rename a file by clicking the 3 dots.\r\n    - File name should be different after renaming it.\r\n\r\n      Given User is at the file page\r\n      When user clicks on the 3 dots icon\r\n      And user select rename from pop up menu\r\n      And user types new file name\r\n      Then file name should be different after renaming it\r\n\r\n  @DownloadFunctionality\r\n      Scenario: 3.Verify the users can download a file by clicking the 3 dots.\r\n\r\n        Given User is at the file page\r\n        When user clicks on the 3 dots icon\r\n        And user select download from pop up menu\r\n        Then file should be downloaded to users computer
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/MeetSky_UploadAndDownload.feature b/src/test/resources/features/MeetSky_UploadAndDownload.feature
+--- a/src/test/resources/features/MeetSky_UploadAndDownload.feature	(revision 01a4eace44db735a2e01cfb9b495ffbbc3946b26)
++++ b/src/test/resources/features/MeetSky_UploadAndDownload.feature	(date 1676738690367)
+@@ -3,15 +3,15 @@
+ 
+   User story:
+   As a user, I should be able to manage a file.
+-  @UploadFunctionality
+-  Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page.
+- - File name should be displayed on the file page after successful upload.
+-
+-    Given User is at the file page
+-    When user clicks on the + icon
+-    And user select upload file from pop up menu
+-     And user choose file and clicks open button
+-    Then file name should be displayed on the file page after successful upload.
++#  @UploadFunctionality
++#  Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page.
++# - File name should be displayed on the file page after successful upload.
++#
++#    Given User is at the file page
++#    When user clicks on the + icon
++#    And user select upload file from pop up menu
++#     And user choose file and clicks open button
++#    Then file name should be displayed on the file page after successful upload.
+ 
+   @RenameFunctionality
+     Scenario: 2.Verify the users can rename a file by clicking the 3 dots.
+Index: src/test/resources/features/MeetSky_manageConversations.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@Regression\r\nFeature: Manage conversations feature\r\n\r\n  User story:\r\n  As a user, I should be able to manage the conversations.\r\n\r\n  Scenario: 1.Verify the users can copy the conversation link.\r\n  - confirmation message should be “ Conversation link copied to clipboard.”\r\n    Given user are in the talk page\r\n    When user clicks on three dots icon next to the group chat\r\n    And selects copy link from the pop up menu\r\n    Then \"Conversation link copied to clipboard.\" message appears on the right\r\n\r\n@favorites\r\n  Scenario: 2. Verify users can add a conversation to favorites.\r\n  - after adding to favorites, the app changes from the “Add to favorite” to “Remove from favorite”.\r\n    Given user are in the talk page\r\n  # add favourite icon to the POM and build a logic around it\r\n    When user clicks on three dots icon next to the group chat\r\n    And user clicks on the Add to favourites option\r\n    Then the app changes from the “Add to favorite” to “Remove from favorite”.
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/MeetSky_manageConversations.feature b/src/test/resources/features/MeetSky_manageConversations.feature
+--- a/src/test/resources/features/MeetSky_manageConversations.feature	(revision 01a4eace44db735a2e01cfb9b495ffbbc3946b26)
++++ b/src/test/resources/features/MeetSky_manageConversations.feature	(date 1676738690377)
+@@ -15,7 +15,6 @@
+   Scenario: 2. Verify users can add a conversation to favorites.
+   - after adding to favorites, the app changes from the “Add to favorite” to “Remove from favorite”.
+     Given user are in the talk page
+-  # add favourite icon to the POM and build a logic around it
+     When user clicks on three dots icon next to the group chat
+     And user clicks on the Add to favourites option
+     Then the app changes from the “Add to favorite” to “Remove from favorite”.
+\ No newline at end of file
+Index: src/test/java/groupProject/step_definitions/Hooks.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/step_definitions/Hooks.java b/src/test/java/groupProject/step_definitions/Hooks.java
+new file mode 100644
+--- /dev/null	(date 1676827506340)
++++ b/src/test/java/groupProject/step_definitions/Hooks.java	(date 1676827506340)
+@@ -0,0 +1,21 @@
++package groupProject.step_definitions;
++
++import groupProject.Utilities.BrowserUtils;
++import groupProject.Utilities.Driver;
++import io.cucumber.java.After;
++import io.cucumber.java.Scenario;
++import org.openqa.selenium.OutputType;
++import org.openqa.selenium.TakesScreenshot;
++
++public class Hooks {
++
++    @After
++    public void teardownMethod(Scenario scenario){
++        if(scenario.isFailed()){
++            byte[] screenshot = ((TakesScreenshot)Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
++            scenario.attach(screenshot,"image/png", scenario.getName());
++        }
++        BrowserUtils.logout();
++        Driver.driverClose();
++    }
++}
+Index: target/test-classes/features/MeetSky_AccessPhotoPage.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@regression\r\n\r\nFeature: photo page functionality\r\n  user story:As a user, I should be able to access to the photo page.\r\n\r\n\r\n  Scenario:1.Verify the user can access to the photo page\r\n Given user are at the home page.\r\n When  user clicks on the  photo .\r\n Then  user should be able to access to the photo page.\r\n\r\n\r\nScenario: Verify the users see 6 options in the Photos page as shown in the design.\r\n  Given user at photo page.\r\n  Then user clicks on the navigation button.\r\n\r\n\r\n\r\n  Scenario: Verify the “Photo View” .\r\n\r\n    When user at photo page.\r\n    Then user can see photo view\r\n\r\n    Scenario: checkbox under the Settings on the Photos page.\r\n      When user at photo page.\r\n      Then user can see checkbox under settings
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/test-classes/features/MeetSky_AccessPhotoPage.feature b/target/test-classes/features/MeetSky_AccessPhotoPage.feature
+--- a/target/test-classes/features/MeetSky_AccessPhotoPage.feature	(revision 01a4eace44db735a2e01cfb9b495ffbbc3946b26)
++++ b/target/test-classes/features/MeetSky_AccessPhotoPage.feature	(date 1676736574411)
+@@ -1,26 +1,23 @@
+-@regression
+-
++@Regression
+ Feature: photo page functionality
+   user story:As a user, I should be able to access to the photo page.
+ 
+ 
+   Scenario:1.Verify the user can access to the photo page
+- Given user are at the home page.
+- When  user clicks on the  photo .
+- Then  user should be able to access to the photo page.
++    Given user are at the home page.
++    When  user clicks on the  photo .
++    Then  user should be able to access to the photo page.
+ 
+ 
+-Scenario: Verify the users see 6 options in the Photos page as shown in the design.
+-  Given user at photo page.
+-  Then user clicks on the navigation button.
++  Scenario: Verify the users see 6 options in the Photos page as shown in the design.
++    Given user at photo page.
++    Then user clicks on the navigation button.
+ 
+ 
+-
+   Scenario: Verify the “Photo View” .
+-
+     When user at photo page.
+     Then user can see photo view
+ 
+-    Scenario: checkbox under the Settings on the Photos page.
+-      When user at photo page.
+-      Then user can see checkbox under settings
+\ No newline at end of file
++  Scenario: checkbox under the Settings on the Photos page.
++    When user at photo page.
++    Then user can see checkbox under settings
+\ No newline at end of file
+Index: src/test/java/groupProject/Pages/MeetSkyLogin.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package groupProject.Pages;\r\n\r\nimport groupProject.Utilities.ConfigurationReader;\r\nimport groupProject.Utilities.Driver;\r\nimport org.openqa.selenium.WebElement;\r\nimport org.openqa.selenium.support.FindBy;\r\nimport org.openqa.selenium.support.PageFactory;\r\n\r\npublic class MeetSkyLogin {\r\n\r\n    public MeetSkyLogin(){\r\n        PageFactory.initElements(Driver.getDriver(),this);\r\n    }\r\n\r\n    @FindBy (id = \"user\")\r\n    public WebElement usernameInputBox;\r\n\r\n    @FindBy (id = \"password\")\r\n    public WebElement passwordInputBox;\r\n\r\n    @FindBy (id = \"submit-form\")\r\n    public WebElement loginButton;\r\n\r\n    // method to login to the meetSky app\r\n    public void login(){\r\n        usernameInputBox.sendKeys(ConfigurationReader.getProperty(\"meetSkyUsername\"));\r\n        passwordInputBox.sendKeys(ConfigurationReader.getProperty(\"meetSkyPassword\"));\r\n        loginButton.click();\r\n    }\r\n\r\n    @FindBy (xpath = \"//p[contains(.,'Wrong username or password.')]\")\r\n    public WebElement wrongUsernameOrPasswordMessage;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/Pages/MeetSkyLogin.java b/src/test/java/groupProject/Pages/MeetSkyLogin.java
+--- a/src/test/java/groupProject/Pages/MeetSkyLogin.java	(revision 01a4eace44db735a2e01cfb9b495ffbbc3946b26)
++++ b/src/test/java/groupProject/Pages/MeetSkyLogin.java	(date 1676739178296)
+@@ -28,6 +28,6 @@
+         loginButton.click();
+     }
+ 
+-    @FindBy (xpath = "//p[contains(.,'Wrong username or password.')]")
++    @FindBy (xpath = "//p[@class='warning wrongPasswordMsg']")
+     public WebElement wrongUsernameOrPasswordMessage;
+ }
+Index: target/test-classes/features/MeetSky_manageConversations.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@Regression\r\nFeature: Manage conversations feature\r\n\r\n  User story:\r\n  As a user, I should be able to manage the conversations.\r\n\r\n  Scenario: 1.Verify the users can copy the conversation link.\r\n  - confirmation message should be “ Conversation link copied to clipboard.”\r\n    Given user are in the talk page\r\n    When user clicks on three dots icon next to the group chat\r\n    And selects copy link from the pop up menu\r\n    Then \"Conversation link copied to clipboard.\" message appears on the right\r\n\r\n@favorites\r\n  Scenario: 2. Verify users can add a conversation to favorites.\r\n  - after adding to favorites, the app changes from the “Add to favorite” to “Remove from favorite”.\r\n    Given user are in the talk page\r\n  # add favourite icon to the POM and build a logic around it\r\n    When user clicks on three dots icon next to the group chat\r\n    And user clicks on the Add to favourites option\r\n    Then the app changes from the “Add to favorite” to “Remove from favorite”.
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/test-classes/features/MeetSky_manageConversations.feature b/target/test-classes/features/MeetSky_manageConversations.feature
+--- a/target/test-classes/features/MeetSky_manageConversations.feature	(revision 01a4eace44db735a2e01cfb9b495ffbbc3946b26)
++++ b/target/test-classes/features/MeetSky_manageConversations.feature	(date 1676738690377)
+@@ -15,7 +15,6 @@
+   Scenario: 2. Verify users can add a conversation to favorites.
+   - after adding to favorites, the app changes from the “Add to favorite” to “Remove from favorite”.
+     Given user are in the talk page
+-  # add favourite icon to the POM and build a logic around it
+     When user clicks on three dots icon next to the group chat
+     And user clicks on the Add to favourites option
+     Then the app changes from the “Add to favorite” to “Remove from favorite”.
+\ No newline at end of file
+Index: target/test-classes/features/MeetSky_UploadAndDownload.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@Regression\r\nFeature: Upload and Download feature\r\n\r\n  User story:\r\n  As a user, I should be able to manage a file.\r\n  @UploadFunctionality\r\n  Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page.\r\n - File name should be displayed on the file page after successful upload.\r\n\r\n    Given User is at the file page\r\n    When user clicks on the + icon\r\n    And user select upload file from pop up menu\r\n     And user choose file and clicks open button\r\n    Then file name should be displayed on the file page after successful upload.\r\n\r\n  @RenameFunctionality\r\n    Scenario: 2.Verify the users can rename a file by clicking the 3 dots.\r\n    - File name should be different after renaming it.\r\n\r\n      Given User is at the file page\r\n      When user clicks on the 3 dots icon\r\n      And user select rename from pop up menu\r\n      And user types new file name\r\n      Then file name should be different after renaming it\r\n\r\n  @DownloadFunctionality\r\n      Scenario: 3.Verify the users can download a file by clicking the 3 dots.\r\n\r\n        Given User is at the file page\r\n        When user clicks on the 3 dots icon\r\n        And user select download from pop up menu\r\n        Then file should be downloaded to users computer
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/test-classes/features/MeetSky_UploadAndDownload.feature b/target/test-classes/features/MeetSky_UploadAndDownload.feature
+--- a/target/test-classes/features/MeetSky_UploadAndDownload.feature	(revision 01a4eace44db735a2e01cfb9b495ffbbc3946b26)
++++ b/target/test-classes/features/MeetSky_UploadAndDownload.feature	(date 1676738690367)
+@@ -3,15 +3,15 @@
+ 
+   User story:
+   As a user, I should be able to manage a file.
+-  @UploadFunctionality
+-  Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page.
+- - File name should be displayed on the file page after successful upload.
+-
+-    Given User is at the file page
+-    When user clicks on the + icon
+-    And user select upload file from pop up menu
+-     And user choose file and clicks open button
+-    Then file name should be displayed on the file page after successful upload.
++#  @UploadFunctionality
++#  Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page.
++# - File name should be displayed on the file page after successful upload.
++#
++#    Given User is at the file page
++#    When user clicks on the + icon
++#    And user select upload file from pop up menu
++#     And user choose file and clicks open button
++#    Then file name should be displayed on the file page after successful upload.
+ 
+   @RenameFunctionality
+     Scenario: 2.Verify the users can rename a file by clicking the 3 dots.
