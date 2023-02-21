@@ -1,0 +1,355 @@
+Index: src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java b/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java
+--- a/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java	
++++ b/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java	
+@@ -60,7 +60,7 @@
+ 
+     @Then("User should see the checkbox selected indicating that the file or folder is selected.")
+     public void user_should_see_the_checkbox_selected_indicating_that_the_file_or_folder_is_selected() {
+-        BrowserUtils.logout();
++
+     }
+ 
+     @When("User should be able to click the Select All checkbox.")
+@@ -75,7 +75,7 @@
+         for (WebElement each : files.allFilesAndFOldersCheckboxes) {
+             softAssert.assertTrue(each.isSelected());
+         }
+-        BrowserUtils.logout();
++
+     }
+ 
+ 
+@@ -134,7 +134,6 @@
+             allFileNames.add(eachFileName.getText());
+             }
+         Assert.assertTrue(allFileNames.contains(expectedName));
+-        BrowserUtils.logout();
+         }
+ 
+ 
+@@ -164,12 +163,10 @@
+     }
+     @When("enters valid password to password input box")
+     public void enters_valid_password_to_password_input_box() {
+-        MeetSkyLogin loginPage = new MeetSkyLogin();
+         loginPage.passwordInputBox.sendKeys(ConfigurationReader.getProperty("meetSkyPassword"));
+     }
+     @When("clicks login button")
+     public void clicks_login_button() {
+-        MeetSkyLogin loginPage = new MeetSkyLogin();
+         loginPage.loginButton.click();
+     }
+     @Then("land on the Dashboard page after successful login.")
+@@ -177,17 +174,17 @@
+         String actualTitle = Driver.getDriver().getTitle();
+         String expectedTitle = "Dashboard";
+         Assert.assertTrue(actualTitle.contains(expectedTitle));
+-        BrowserUtils.logout();
++
+     }
+ 
+     @When("enters invalid username to username input box")
+     public void enters_invalid_username_to_username_input_box() {
+-        MeetSkyLogin loginPage = new MeetSkyLogin();
+         loginPage.usernameInputBox.sendKeys("InvalidUsername");
+     }
++
+     @Then("user should see the warning message - Wrong username or password")
+     public void user_should_see_the_warning_message_invalid_username_or_password() {
+-        MeetSkyLogin loginPage = new MeetSkyLogin();
++       wait.until(ExpectedConditions.visibilityOf(loginPage.wrongUsernameOrPasswordMessage));
+         String actualMessage = loginPage.wrongUsernameOrPasswordMessage.getText();
+         String expectedText = "Wrong username or password.";
+         Assert.assertTrue(actualMessage.contains(expectedText));
+@@ -276,7 +273,7 @@
+ 
+       List<String> expected = new ArrayList<>(Arrays.asList("Add to favourites","Copy link","Chat notifications","All messages","@-mentions only","off","Leave conversation","Delete conversation"));
+       // Assert.assertEquals(actual,expected);// test should be fail cause there is 2 actions missing on the page
+-        BrowserUtils.logout();
++
+     }
+ 
+     MeetSkyGroupChat talkPage = new MeetSkyGroupChat();
+@@ -331,7 +328,7 @@
+     @Then("the app changes from the “Add to favorite” to “Remove from favorite”.")
+     public void the_app_changes_from_the_add_to_favorite_to_remove_from_favorite() {
+         Assert.assertTrue(talkPage.removeFromFavourites.isDisplayed());
+-        BrowserUtils.logout();
++
+     }
+     @When("user clicks on new folder and type a name")
+     public void user_clicks_on_new_folder_and_type_a_name()  {
+@@ -345,7 +342,7 @@
+     @Then("user should see new folder with the name displayed on the Files page")
+     public void user_should_see_new_folder_with_the_name_displayed_on_the_files_page() {
+         MeetSkyFiles.new_folder_display_verification("Irina test auto");
+-        BrowserUtils.logout();
++
+     }
+ 
+ 
+@@ -372,6 +369,5 @@
+         String actualTitle = activityPageText.getText();
+         String expectedTitle = "Today";
+         Assert.assertEquals(actualTitle, expectedTitle);
+-        BrowserUtils.logout();
+     }
+ }
+Index: src/test/resources/features/MeetSky_AccessPhotoPage.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/MeetSky_AccessPhotoPage.feature b/src/test/resources/features/MeetSky_AccessPhotoPage.feature
+--- a/src/test/resources/features/MeetSky_AccessPhotoPage.feature	
++++ b/src/test/resources/features/MeetSky_AccessPhotoPage.feature	
+@@ -4,22 +4,20 @@
+ 
+ 
+   Scenario:1.Verify the user can access to the photo page
+- Given user are at the home page.
+- When  user clicks on the  photo .
+- Then  user should be able to access to the photo page.
++    Given user are at the home page.
++    When  user clicks on the  photo .
++    Then  user should be able to access to the photo page.
+ 
+ 
+-Scenario: Verify the users see 6 options in the Photos page as shown in the design.
+-  Given user at photo page.
+-  Then user clicks on the navigation button.
++  Scenario: Verify the users see 6 options in the Photos page as shown in the design.
++    Given user at photo page.
++    Then user clicks on the navigation button.
+ 
+ 
+-
+   Scenario: Verify the “Photo View” .
+-
+     When user at photo page.
+     Then user can see photo view
+ 
+-    Scenario: checkbox under the Settings on the Photos page.
+-      When user at photo page.
+-      Then user can see checkbox under settings
+\ No newline at end of file
++  Scenario: checkbox under the Settings on the Photos page.
++    When user at photo page.
++    Then user can see checkbox under settings
+\ No newline at end of file
+Index: src/test/java/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.java b/src/test/java/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.java
+--- a/src/test/java/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.java	
++++ b/src/test/java/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.java	
+@@ -76,7 +76,7 @@
+ 
+ 
+ 
+-       BrowserUtils.logout();
++
+     }
+ }
+ 
+Index: src/test/resources/features/MeetSky_UploadAndDownload.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/MeetSky_UploadAndDownload.feature b/src/test/resources/features/MeetSky_UploadAndDownload.feature
+--- a/src/test/resources/features/MeetSky_UploadAndDownload.feature	
++++ b/src/test/resources/features/MeetSky_UploadAndDownload.feature	
+@@ -3,15 +3,15 @@
+ 
+   User story:
+   As a user, I should be able to manage a file.
+-  @UploadFunctionality
+-  Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page.
+- - File name should be displayed on the file page after successful upload.
+-
+-    Given User is at the file page
+-    When user clicks on the + icon
+-    And user select upload file from pop up menu
+-     And user choose file and clicks open button
+-    Then file name should be displayed on the file page after successful upload.
++#  @UploadFunctionality
++#  Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page.
++# - File name should be displayed on the file page after successful upload.
++#
++#    Given User is at the file page
++#    When user clicks on the + icon
++#    And user select upload file from pop up menu
++#     And user choose file and clicks open button
++#    Then file name should be displayed on the file page after successful upload.
+ 
+   @RenameFunctionality
+     Scenario: 2.Verify the users can rename a file by clicking the 3 dots.
+Index: src/test/resources/features/MeetSky_manageConversations.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/MeetSky_manageConversations.feature b/src/test/resources/features/MeetSky_manageConversations.feature
+--- a/src/test/resources/features/MeetSky_manageConversations.feature	
++++ b/src/test/resources/features/MeetSky_manageConversations.feature	
+@@ -15,7 +15,6 @@
+   Scenario: 2. Verify users can add a conversation to favorites.
+   - after adding to favorites, the app changes from the “Add to favorite” to “Remove from favorite”.
+     Given user are in the talk page
+-  # add favourite icon to the POM and build a logic around it
+     When user clicks on three dots icon next to the group chat
+     And user clicks on the Add to favourites option
+     Then the app changes from the “Add to favorite” to “Remove from favorite”.
+\ No newline at end of file
+Index: src/test/java/groupProject/step_definitions/Hooks.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/step_definitions/Hooks.java b/src/test/java/groupProject/step_definitions/Hooks.java
+new file mode 100644
+--- /dev/null	
++++ b/src/test/java/groupProject/step_definitions/Hooks.java	
+@@ -0,0 +1,21 @@
++package groupProject.step_definitions;
++
++import groupProject.Utilities.BrowserUtils;
++import groupProject.Utilities.Driver;
++import io.cucumber.java.After;
++import io.cucumber.java.Scenario;
++import org.openqa.selenium.OutputType;
++import org.openqa.selenium.TakesScreenshot;
++
++public class Hooks {
++
++    @After
++    public void teardownMethod(Scenario scenario){
++        if(scenario.isFailed()){
++            byte[] screenshot = ((TakesScreenshot)Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
++            scenario.attach(screenshot,"image/png", scenario.getName());
++        }
++        BrowserUtils.logout();
++        Driver.driverClose();
++    }
++}
+Index: target/test-classes/features/MeetSky_AccessPhotoPage.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/test-classes/features/MeetSky_AccessPhotoPage.feature b/target/test-classes/features/MeetSky_AccessPhotoPage.feature
+--- a/target/test-classes/features/MeetSky_AccessPhotoPage.feature	
++++ b/target/test-classes/features/MeetSky_AccessPhotoPage.feature	
+@@ -1,26 +1,23 @@
+-@regression
+-
++@Regression
+ Feature: photo page functionality
+   user story:As a user, I should be able to access to the photo page.
+ 
+ 
+   Scenario:1.Verify the user can access to the photo page
+- Given user are at the home page.
+- When  user clicks on the  photo .
+- Then  user should be able to access to the photo page.
++    Given user are at the home page.
++    When  user clicks on the  photo .
++    Then  user should be able to access to the photo page.
+ 
+ 
+-Scenario: Verify the users see 6 options in the Photos page as shown in the design.
+-  Given user at photo page.
+-  Then user clicks on the navigation button.
++  Scenario: Verify the users see 6 options in the Photos page as shown in the design.
++    Given user at photo page.
++    Then user clicks on the navigation button.
+ 
+ 
+-
+   Scenario: Verify the “Photo View” .
+-
+     When user at photo page.
+     Then user can see photo view
+ 
+-    Scenario: checkbox under the Settings on the Photos page.
+-      When user at photo page.
+-      Then user can see checkbox under settings
+\ No newline at end of file
++  Scenario: checkbox under the Settings on the Photos page.
++    When user at photo page.
++    Then user can see checkbox under settings
+\ No newline at end of file
+Index: src/test/java/groupProject/Pages/MeetSkyLogin.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/Pages/MeetSkyLogin.java b/src/test/java/groupProject/Pages/MeetSkyLogin.java
+--- a/src/test/java/groupProject/Pages/MeetSkyLogin.java	
++++ b/src/test/java/groupProject/Pages/MeetSkyLogin.java	
+@@ -28,6 +28,6 @@
+         loginButton.click();
+     }
+ 
+-    @FindBy (xpath = "//p[contains(.,'Wrong username or password.')]")
++    @FindBy (xpath = "//p[@class='warning wrongPasswordMsg']")
+     public WebElement wrongUsernameOrPasswordMessage;
+ }
+Index: target/test-classes/features/MeetSky_manageConversations.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/test-classes/features/MeetSky_manageConversations.feature b/target/test-classes/features/MeetSky_manageConversations.feature
+--- a/target/test-classes/features/MeetSky_manageConversations.feature	
++++ b/target/test-classes/features/MeetSky_manageConversations.feature	
+@@ -15,7 +15,6 @@
+   Scenario: 2. Verify users can add a conversation to favorites.
+   - after adding to favorites, the app changes from the “Add to favorite” to “Remove from favorite”.
+     Given user are in the talk page
+-  # add favourite icon to the POM and build a logic around it
+     When user clicks on three dots icon next to the group chat
+     And user clicks on the Add to favourites option
+     Then the app changes from the “Add to favorite” to “Remove from favorite”.
+\ No newline at end of file
+Index: target/test-classes/features/MeetSky_UploadAndDownload.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/test-classes/features/MeetSky_UploadAndDownload.feature b/target/test-classes/features/MeetSky_UploadAndDownload.feature
+--- a/target/test-classes/features/MeetSky_UploadAndDownload.feature	
++++ b/target/test-classes/features/MeetSky_UploadAndDownload.feature	
+@@ -3,15 +3,15 @@
+ 
+   User story:
+   As a user, I should be able to manage a file.
+-  @UploadFunctionality
+-  Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page.
+- - File name should be displayed on the file page after successful upload.
+-
+-    Given User is at the file page
+-    When user clicks on the + icon
+-    And user select upload file from pop up menu
+-     And user choose file and clicks open button
+-    Then file name should be displayed on the file page after successful upload.
++#  @UploadFunctionality
++#  Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page.
++# - File name should be displayed on the file page after successful upload.
++#
++#    Given User is at the file page
++#    When user clicks on the + icon
++#    And user select upload file from pop up menu
++#     And user choose file and clicks open button
++#    Then file name should be displayed on the file page after successful upload.
+ 
+   @RenameFunctionality
+     Scenario: 2.Verify the users can rename a file by clicking the 3 dots.

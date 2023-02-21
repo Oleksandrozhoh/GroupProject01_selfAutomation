@@ -1,0 +1,215 @@
+Index: src/test/java/groupProject/Runners/BladeRunner.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package groupProject.Runners;\r\n\r\nimport io.cucumber.junit.Cucumber;\r\nimport io.cucumber.junit.CucumberOptions;\r\nimport org.junit.runner.RunWith;\r\n\r\n@RunWith(Cucumber.class)\r\n@CucumberOptions(\r\n    features = \"src/test/resources/features\",\r\n        glue = \"groupProject/step_definitions\",\r\n        dryRun = false,\r\n        tags = \"@wip\"\r\n        )\r\npublic class BladeRunner {\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/Runners/BladeRunner.java b/src/test/java/groupProject/Runners/BladeRunner.java
+--- a/src/test/java/groupProject/Runners/BladeRunner.java	(revision 4a1cd7e510458a922eee4fc1c28b64b65f0062b8)
++++ b/src/test/java/groupProject/Runners/BladeRunner.java	(date 1676515786262)
+@@ -9,7 +9,7 @@
+     features = "src/test/resources/features",
+         glue = "groupProject/step_definitions",
+         dryRun = false,
+-        tags = "@wip"
++        tags = "@Regression"
+         )
+ public class BladeRunner {
+ }
+Index: src/test/java/groupProject/Pages/MeetSkyGroupChat.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package groupProject.Pages;\r\n\r\nimport groupProject.Utilities.Driver;\r\nimport org.openqa.selenium.WebElement;\r\nimport org.openqa.selenium.support.FindBy;\r\nimport org.openqa.selenium.support.PageFactory;\r\n\r\nimport java.util.List;\r\n\r\npublic class MeetSkyGroupChat {\r\n    public MeetSkyGroupChat() {\r\n        PageFactory.initElements(Driver.getDriver(),this);\r\n    }\r\n\r\n    @FindBy(xpath = \"//ul[@id='appmenu']//a[@aria-label='Talk']//*[name()='svg']//*[name()='image' and contains(@class,'app-icon')]\")\r\n    public WebElement talkButton;\r\n\r\n    @FindBy(css = \"div.wrapper\")\r\n    public WebElement createChatButton;\r\n\r\n    @FindBy(xpath = \"//input[@class='conversation-name']\")\r\n    public WebElement conversationName;\r\n\r\n    @FindBy(xpath = \"//span[contains(text(),'Add participants')]\")\r\n    public WebElement addParticipants;\r\n\r\n    @FindBy(xpath = \"//input[@class='set-contacts__input']\")\r\n    public WebElement searchParticipants;\r\n\r\n    @FindBy(xpath = \"//div[@class='set-contacts']//div[1]//ul[1]//li[1]//div[2]//div[1]//span[1]\")\r\n    public WebElement participant;\r\n\r\n    @FindBy(xpath = \"//span[contains(text(),'Create conversation')]\")\r\n    public WebElement conversationButton;\r\n\r\n    @FindBy(className = \"title\")\r\n    public WebElement groupChatName;\r\n\r\n    @FindBy(xpath = \"//div[@class='trigger']/button[@class='icon action-item__menutoggle action-item__menutoggle--default-icon']\")\r\n    public WebElement dotsButton;\r\n\r\n    @FindBy(xpath = \"//div[@class='popover__inner']//li\")\r\n    public List<WebElement> channelActions;\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/Pages/MeetSkyGroupChat.java b/src/test/java/groupProject/Pages/MeetSkyGroupChat.java
+--- a/src/test/java/groupProject/Pages/MeetSkyGroupChat.java	(revision 4a1cd7e510458a922eee4fc1c28b64b65f0062b8)
++++ b/src/test/java/groupProject/Pages/MeetSkyGroupChat.java	(date 1676569458881)
+@@ -4,7 +4,9 @@
+ import org.openqa.selenium.WebElement;
+ import org.openqa.selenium.support.FindBy;
+ import org.openqa.selenium.support.PageFactory;
++import org.openqa.selenium.support.ui.WebDriverWait;
+ 
++import java.time.Duration;
+ import java.util.List;
+ 
+ public class MeetSkyGroupChat {
+@@ -12,6 +14,8 @@
+         PageFactory.initElements(Driver.getDriver(),this);
+     }
+ 
++
++
+     @FindBy(xpath = "//ul[@id='appmenu']//a[@aria-label='Talk']//*[name()='svg']//*[name()='image' and contains(@class,'app-icon')]")
+     public WebElement talkButton;
+ 
+@@ -39,9 +43,26 @@
+     @FindBy(xpath = "//div[@class='trigger']/button[@class='icon action-item__menutoggle action-item__menutoggle--default-icon']")
+     public WebElement dotsButton;
+ 
++    @FindBy(xpath = "//div[@class='list-item-content__wrapper']")
++    public WebElement chat;
++
+     @FindBy(xpath = "//div[@class='popover__inner']//li")
+     public List<WebElement> channelActions;
+ 
++    public void navigateToTalkPage(){
++        MeetSkyLogin loginPage = new MeetSkyLogin();
++        loginPage.login();
++        talkButton.click();
++    }
++
++    @FindBy (xpath = "//span[.='Copy link']")
++    public WebElement copyLinkOption;
++
++    @FindBy (xpath = "//div[@class='toastify on dialogs toast-success toastify-right toastify-top']")
++    public WebElement conversationLinkCopiedToClipboard;
++
++
++
+ 
+ 
+ 
+Index: src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package groupProject.step_definitions;\r\n\r\nimport groupProject.Pages.MeetSkyDashboard;\r\nimport groupProject.Pages.MeetSkyFiles;\r\nimport groupProject.Pages.MeetSkyGroupChat;\r\nimport groupProject.Pages.MeetSkyLogin;\r\nimport groupProject.Utilities.BrowserUtils;\r\nimport groupProject.Utilities.ConfigurationReader;\r\nimport groupProject.Utilities.Driver;\r\nimport io.cucumber.java.en.Given;\r\nimport io.cucumber.java.en.Then;\r\nimport io.cucumber.java.en.When;\r\nimport org.junit.Assert;\r\nimport org.openqa.selenium.By;\r\nimport org.openqa.selenium.Keys;\r\nimport org.openqa.selenium.WebElement;\r\nimport org.openqa.selenium.interactions.Actions;\r\nimport org.openqa.selenium.support.ui.ExpectedConditions;\r\nimport org.openqa.selenium.support.ui.WebDriverWait;\r\nimport org.testng.asserts.SoftAssert;\r\n\r\nimport java.io.File;\r\nimport java.time.Duration;\r\nimport java.util.ArrayList;\r\nimport java.util.Arrays;\r\nimport java.util.List;\r\n\r\npublic class MeetSky_stepDefinitions {\r\n    @Given(\"user are at the home page.\")\r\n    public void user_are_at_the_home_page() {\r\n        Driver.getDriver().get(\"https://qa.meetsky.net/index.php/login\");\r\n        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();\r\n        meetSkyLogin.login();\r\n    }\r\n\r\n    @When(\"user clicks on the Files module..\")\r\n    public void user_clicks_on_the_files_module() {\r\n        MeetSkyDashboard dashboard = new MeetSkyDashboard();\r\n        WebDriverWait wait = new WebDriverWait(Driver.getDriver(),Duration.ofSeconds(10));\r\n        wait.until(ExpectedConditions.elementToBeClickable(dashboard.filesButton));\r\n        dashboard.filesButton.click();\r\n    }\r\n\r\n    @Then(\"user launched to the Files page\")\r\n    public void user_launched_to_the_files_page() {\r\n        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));\r\n        wait.until(ExpectedConditions.titleIs(\"Files - QA - Meetsky\"));\r\n    }\r\n    @When(\"user clicks on any file or folder checkbox\")\r\n    public void user_clicks_on_any_file_or_folder_checkbox() {\r\n\r\n        SoftAssert softAssert = new SoftAssert();\r\n        MeetSkyFiles files = new MeetSkyFiles();\r\n        for (WebElement eachCheckbox : files.allFilesAndFOldersCheckboxes) {\r\n            eachCheckbox.click();\r\n            softAssert.assertTrue(eachCheckbox.isSelected());\r\n        }\r\n    }\r\n\r\n    @Then(\"User should see the checkbox selected indicating that the file or folder is selected.\")\r\n    public void user_should_see_the_checkbox_selected_indicating_that_the_file_or_folder_is_selected() {\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n    @When(\"User should be able to click the Select All checkbox.\")\r\n    public void user_should_be_able_to_click_the_checkbox() {\r\n        MeetSkyFiles files = new MeetSkyFiles();\r\n        files.selectAllCheckbox.click();\r\n    }\r\n    @Then(\"User should see all the files and folders checkboxes selected automatically.\")\r\n    public void user_should_see_all_the_files_and_folders_checkboxes_selected_automatically() {\r\n        SoftAssert softAssert = new SoftAssert();\r\n        MeetSkyFiles files = new MeetSkyFiles();\r\n        for (WebElement each : files.allFilesAndFOldersCheckboxes) {\r\n            softAssert.assertTrue(each.isSelected());\r\n        }\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n\r\n    @Given(\"User is at the file page\")\r\n    public void user_is_at_the_file_page() {\r\n        Driver.getDriver().get(\"https://qa.meetsky.net/\");\r\n        MeetSkyLogin login = new MeetSkyLogin();\r\n        login.login();\r\n\r\n        MeetSkyDashboard dashboard = new MeetSkyDashboard();\r\n        dashboard.goToFiles();\r\n\r\n    }\r\n    @When(\"user clicks on the + icon\")\r\n    public void user_clicks_on_the_icon() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        filesPage.plusButton.click();\r\n    }\r\n    @When(\"user select upload file from pop up menu\")\r\n    public void user_select_from_pop_up_menu() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        filesPage.uploadFileOption.sendKeys(\"\\\"C:\\\\Users\\\\oleks\\\\OneDrive\\\\Desktop\\\\Screenshots\\\\251077486_227333759502218_5718729936563081174_n.jpg\\\"\");\r\n    }\r\n    @When(\"user choose file and clicks open button\")\r\n    public void user_choose_file_and_clicks_button() {\r\n\r\n    }\r\n    @Then(\"file name should be displayed on the file page after successful upload.\")\r\n    public void file_name_should_be_displayed_on_the_file_page_after_successful_upload() {\r\n\r\n    }\r\n\r\n    @When(\"user clicks on the 3 dots icon\")\r\n    public void user_clicks_on_the_dots_icon() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        filesPage.treeDotsIcon_2ndRow.click();\r\n    }\r\n    @When(\"user select rename from pop up menu\")\r\n    public void user_select_rename_from_pop_up_menu() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        filesPage.renameOption.click();\r\n    }\r\n    @When(\"user types new file name\")\r\n    public void user_types_new_file_name() {\r\n        Actions actions = new Actions(Driver.getDriver());\r\n        actions.sendKeys(\"renamed\"+ Keys.ENTER).perform();\r\n    }\r\n    @Then(\"file name should be different after renaming it\")\r\n    public void file_name_should_be_different_after_renaming_it() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        List <String> allFileNames = new ArrayList<>();\r\n        String expectedName = \"renamed\";\r\n        for (WebElement eachFileName : filesPage.listOfFIleNames) {\r\n            allFileNames.add(eachFileName.getText());\r\n            }\r\n        Assert.assertTrue(allFileNames.contains(expectedName));\r\n        BrowserUtils.logout();\r\n        }\r\n\r\n\r\n    @When(\"user select download from pop up menu\")\r\n    public void user_select_download_from_pop_up_menu() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        filesPage.downloadOption.click();\r\n    }\r\n\r\n    @Then(\"file should be downloaded to users computer\")\r\n    public void file_should_be_downloaded_to_users_computer() {\r\n        MeetSkyFiles filesPage = new MeetSkyFiles();\r\n        File file = new File(\"C:\\\\Users\\\\oleks\\\\Downloads\\\\\"+filesPage.fileNameSecondRow.getText()+\".zip\");\r\n        Assert.assertTrue(file.exists());\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n    @Given(\"user is at the login page\")\r\n    public void user_is_at_the_login_page() {\r\n        Driver.getDriver().get(ConfigurationReader.getProperty(\"meetSkyURL\"));\r\n    }\r\n    @When(\"enters valid username to username input box\")\r\n    public void enters_valid_username_to_username_input_box() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        loginPage.usernameInputBox.sendKeys(ConfigurationReader.getProperty(\"meetSkyUsername\"));\r\n    }\r\n    @When(\"enters valid password to password input box\")\r\n    public void enters_valid_password_to_password_input_box() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        loginPage.passwordInputBox.sendKeys(ConfigurationReader.getProperty(\"meetSkyPassword\"));\r\n    }\r\n    @When(\"clicks login button\")\r\n    public void clicks_login_button() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        loginPage.loginButton.click();\r\n    }\r\n    @Then(\"land on the Dashboard page after successful login.\")\r\n    public void land_on_the_page_after_successful_login() {\r\n        String actualTitle = Driver.getDriver().getTitle();\r\n        String expectedTitle = \"Dashboard\";\r\n        Assert.assertTrue(actualTitle.contains(expectedTitle));\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n    @When(\"enters invalid username to username input box\")\r\n    public void enters_invalid_username_to_username_input_box() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        loginPage.usernameInputBox.sendKeys(\"InvalidUsername\");\r\n    }\r\n    @Then(\"user should see the warning message - Wrong username or password\")\r\n    public void user_should_see_the_warning_message_invalid_username_or_password() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        String actualMessage = loginPage.wrongUsernameOrPasswordMessage.getText();\r\n        String expectedText = \"Wrong username or password.\";\r\n        Assert.assertTrue(actualMessage.contains(expectedText));\r\n    }\r\n\r\n    @When(\"enters password to password input box\")\r\n    public void enters_password_to_password_input_box() {\r\n       MeetSkyLogin loginPage = new MeetSkyLogin();\r\n       loginPage.passwordInputBox.sendKeys(\"mySecretPassword\");\r\n    }\r\n    @Then(\"password text box displays the characters entered by a user as bullet point\")\r\n    public void password_text_box_displays_the_characters_entered_by_a_user_as_bullet_point() {\r\n        MeetSkyLogin loginPage = new MeetSkyLogin();\r\n        String typeAttributeValue = loginPage.passwordInputBox.getAttribute(\"type\");\r\n        Assert.assertEquals(\"password\",typeAttributeValue);\r\n\r\n    }\r\n//  --------------------------------------------------------\r\n        MeetSkyGroupChat meetSkyGroupChat= new MeetSkyGroupChat();\r\n    @Given(\"User is at the talk page\")\r\n    public void user_is_at_the_talk_page(){\r\n\r\n        Driver.getDriver().get(\"https://qa.meetsky.net/index.php/login\");\r\n        MeetSkyLogin meetSkyLogin = new MeetSkyLogin();\r\n        meetSkyLogin.login();\r\n        BrowserUtils.sleep(4);\r\n        meetSkyGroupChat.talkButton.click();\r\n\r\n\r\n    }\r\n    @When(\"User clicks on the create button and to write a channel name\")\r\n    public void user_clicks_on_the_create_button_and_to_write_a_channel_name() {\r\n    meetSkyGroupChat.createChatButton.click();\r\n    BrowserUtils.sleep(2);\r\n    meetSkyGroupChat.conversationName.sendKeys(\"test chat\"+Keys.ENTER);\r\n    }\r\n    @When(\"User able to add all the users by searching and selecting\")\r\n    public void user_able_to_add_all_the_users_by_searching_and_selecting() {\r\n    meetSkyGroupChat.searchParticipants.sendKeys(\"admin\");\r\n    BrowserUtils.sleep(1);\r\n    meetSkyGroupChat.participant.click();\r\n\r\n    BrowserUtils.sleep(1);\r\n    meetSkyGroupChat.searchParticipants.clear(); // clear the contents of the input field\r\n        BrowserUtils.sleep(1);\r\n\r\n        meetSkyGroupChat.searchParticipants.sendKeys(\"User10\");\r\n        BrowserUtils.sleep(1);\r\n        meetSkyGroupChat.participant.click();\r\n\r\n\r\n        BrowserUtils.sleep(2);\r\n        meetSkyGroupChat.conversationButton.click();\r\n\r\n    }\r\n    @Then(\"User should see the group channel name\")\r\n    public void user_should_see_the_group_channel_name() {\r\n        String expectedResult = \"test chat\";\r\n        String actualResult = meetSkyGroupChat.groupChatName.getText();\r\n        Assert.assertEquals(actualResult,expectedResult);\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n    @When(\"User clicks on the dots button\")\r\n    public void user_clicks_on_the_dots_button() {\r\n        Actions actions = new Actions(Driver.getDriver());\r\n        WebElement chat = Driver.getDriver().findElement(By.xpath(\"//div[@class='list-item-content__wrapper'][1]\"));\r\n        actions.moveToElement(chat)\r\n                .pause(3).perform();\r\n        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));\r\n        wait.until(ExpectedConditions.visibilityOf(meetSkyGroupChat.dotsButton));\r\n        wait.until(ExpectedConditions.elementToBeClickable(meetSkyGroupChat.dotsButton));\r\n        meetSkyGroupChat.dotsButton.click();\r\n    }\r\n\r\n\r\n    @Then(\"user able to see {int} actions to do with channel\")\r\n    public void user_able_to_see_actions_to_do_with_channel(Integer int1) {\r\n        List<String> actual = new ArrayList<>();\r\n        for (WebElement action : meetSkyGroupChat.channelActions) {\r\n            BrowserUtils.sleep(3);\r\n            System.out.println(\"action.getText() = \" + action.getText());\r\n           actual.add(action.getText());\r\n\r\n        }\r\n\r\n      List<String> expected = new ArrayList<>(Arrays.asList(\"Add to favourites\",\"Copy link\",\"Chat notifications\",\"All messages\",\"@-mentions only\",\"off\",\"Leave conversation\",\"Delete conversation\"));\r\n      // Assert.assertEquals(actual,expected);// test should be fail cause there is 2 actions missing on the page\r\n        BrowserUtils.logout();\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java b/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java
+--- a/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java	(revision 4a1cd7e510458a922eee4fc1c28b64b65f0062b8)
++++ b/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java	(date 1676571068463)
+@@ -145,8 +145,9 @@
+     public void file_should_be_downloaded_to_users_computer() {
+         MeetSkyFiles filesPage = new MeetSkyFiles();
+         File file = new File("C:\\Users\\oleks\\Downloads\\"+filesPage.fileNameSecondRow.getText()+".zip");
+-        Assert.assertTrue(file.exists());
+         BrowserUtils.logout();
++        Assert.assertTrue(file.exists());
++
+     }
+ 
+     @Given("user is at the login page")
+@@ -275,5 +276,44 @@
+         BrowserUtils.logout();
+     }
+ 
++    MeetSkyGroupChat talkPage = new MeetSkyGroupChat();
++    @Given("user are in the talk page")
++    public void user_are_in_the_talk_page() {
++        Driver.getDriver().get(ConfigurationReader.getProperty("meetSkyURL"));
++      talkPage.navigateToTalkPage();
++    }
++
++    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
++    @When("user clicks on three dots icon next to the group chat")
++    public void user_clicks_on_three_dots_icon_next_to_the_group_chat() {
++        Actions actions = new Actions(Driver.getDriver());
++        actions.moveToElement(talkPage.chat).perform();
++        wait.until(ExpectedConditions.visibilityOf(talkPage.dotsButton));
++        talkPage.dotsButton.click();
++    }
++    @When("selects copy link from the pop up menu")
++    public void selects_from_the_pop_up_menu() {
++        talkPage.copyLinkOption.click();
++    }
++    @Then("{string} message appears on the right")
++    public void message_appears_on_the_right(String string) {
++        String actualMessage = talkPage.conversationLinkCopiedToClipboard.getText();
++        System.out.println(actualMessage);
++        System.out.println(string);
++        Assert.assertTrue(actualMessage.contains(string));
++    }
++
++    MeetSkyLogin loginPage = new MeetSkyLogin();
++    @Then("Please fill out this field. message should be displayed for any empty field")
++    public void please_fill_out_this_field_message_should_be_displayed_for_any_empty_field() {
++
++
++    }
++
++    @When("user leaves username empty")
++    public void user_leaves_username_empty() {
++        loginPage.usernameInputBox.sendKeys("");
++    }
++
+ 
+ }
+Index: src/test/resources/features/MeetSky_loginFeatures.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@Regression\r\nFeature: Login page features\r\n\r\n  User story:\r\n  As a user, I should be able to access all the features on the login page.\r\n\r\n  @LoginFunctionality\r\n  Scenario: 1.Users should be able to log in with valid credentials should land on the \"Dashboard\" page after successful login.\r\n\r\n    Given user is at the login page\r\n    When enters valid username to username input box\r\n    And enters valid password to password input box\r\n    And clicks login button\r\n    Then land on the Dashboard page after successful login.\r\n\r\n  @InvalidLoginOrPassword\r\n  Scenario: 2.Invalid username or password. message should be displayed for invalid login attempt.\r\n\r\n    Given user is at the login page\r\n    When enters invalid username to username input box\r\n    And enters valid password to password input box\r\n    And clicks login button\r\n    Then user should see the warning message - Wrong username or password\r\n\r\n\r\n#  Scenario: 3.Please fill out this field. message should be displayed for any empty field\r\n\r\n\r\n  Scenario: 4.The password text box displays the characters entered by a user as bullet point\r\n    Given user is at the login page\r\n    When enters password to password input box\r\n    Then password text box displays the characters entered by a user as bullet point
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/MeetSky_loginFeatures.feature b/src/test/resources/features/MeetSky_loginFeatures.feature
+--- a/src/test/resources/features/MeetSky_loginFeatures.feature	(revision 4a1cd7e510458a922eee4fc1c28b64b65f0062b8)
++++ b/src/test/resources/features/MeetSky_loginFeatures.feature	(date 1676571005787)
+@@ -23,7 +23,12 @@
+     Then user should see the warning message - Wrong username or password
+ 
+ 
+-#  Scenario: 3.Please fill out this field. message should be displayed for any empty field
++  Scenario: 3.Please fill out this field. message should be displayed for any empty field
++
++    Given user is at the login page
++    When user leaves username empty
++    And clicks login button
++    Then Please fill out this field. message should be displayed for any empty field
+ 
+ 
+   Scenario: 4.The password text box displays the characters entered by a user as bullet point
+Index: target/test-classes/features/MeetSky_loginFeatures.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>@Regression\r\nFeature: Login page features\r\n\r\n  User story:\r\n  As a user, I should be able to access all the features on the login page.\r\n\r\n  @LoginFunctionality\r\n  Scenario: 1.Users should be able to log in with valid credentials should land on the \"Dashboard\" page after successful login.\r\n\r\n    Given user is at the login page\r\n    When enters valid username to username input box\r\n    And enters valid password to password input box\r\n    And clicks login button\r\n    Then land on the Dashboard page after successful login.\r\n\r\n  @InvalidLoginOrPassword\r\n  Scenario: 2.Invalid username or password. message should be displayed for invalid login attempt.\r\n\r\n    Given user is at the login page\r\n    When enters invalid username to username input box\r\n    And enters valid password to password input box\r\n    And clicks login button\r\n    Then user should see the warning message - Wrong username or password\r\n\r\n\r\n#  Scenario: 3.Please fill out this field. message should be displayed for any empty field\r\n\r\n\r\n  Scenario: 4.The password text box displays the characters entered by a user as bullet point\r\n    Given user is at the login page\r\n    When enters password to password input box\r\n    Then password text box displays the characters entered by a user as bullet point
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/test-classes/features/MeetSky_loginFeatures.feature b/target/test-classes/features/MeetSky_loginFeatures.feature
+--- a/target/test-classes/features/MeetSky_loginFeatures.feature	(revision 4a1cd7e510458a922eee4fc1c28b64b65f0062b8)
++++ b/target/test-classes/features/MeetSky_loginFeatures.feature	(date 1676571005787)
+@@ -23,7 +23,12 @@
+     Then user should see the warning message - Wrong username or password
+ 
+ 
+-#  Scenario: 3.Please fill out this field. message should be displayed for any empty field
++  Scenario: 3.Please fill out this field. message should be displayed for any empty field
++
++    Given user is at the login page
++    When user leaves username empty
++    And clicks login button
++    Then Please fill out this field. message should be displayed for any empty field
+ 
+ 
+   Scenario: 4.The password text box displays the characters entered by a user as bullet point
+Index: src/test/resources/features/MeetSky_manageConversations.feature
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/resources/features/MeetSky_manageConversations.feature b/src/test/resources/features/MeetSky_manageConversations.feature
+new file mode 100644
+--- /dev/null	(date 1676563953545)
++++ b/src/test/resources/features/MeetSky_manageConversations.feature	(date 1676563953545)
+@@ -0,0 +1,15 @@
++Feature: Manage conversations feature
++
++  User story:
++  As a user, I should be able to manage the conversations.
++
++  Scenario: 1.Verify the users can copy the conversation link.
++  - confirmation message should be “ Conversation link copied to clipboard.”
++    Given user are in the talk page
++    When user clicks on three dots icon next to the group chat
++    And selects copy link from the pop up menu
++    Then "Conversation link copied to clipboard." message appears on the right
++
++
++  Scenario: 2. Verify users can add a conversation to favorites.
++  - after adding to favorites, the app changes from the “Add to favorite” to “Remove from favorite”.
+\ No newline at end of file

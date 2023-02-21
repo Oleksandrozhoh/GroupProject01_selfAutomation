@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2734c7c2-9800-4c59-917e-548aac9d56b5" name="Changes" comment="fixed Noor's @regression tax syntax, deleted extra Runners classes">
+      <change afterPath="$PROJECT_DIR$/src/test/java/groupProject/step_definitions/Hooks.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/groupProject/Pages/MeetSkyFiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/groupProject/Pages/MeetSkyFiles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/groupProject/Runners/BladeRunner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/groupProject/Runners/BladeRunner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/groupProject/step_definitions/MeetSky_stepDefinitions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/features/MeetSky_UploadAndDownload.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/features/MeetSky_UploadAndDownload.feature" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/cucumber-reports.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/MeetSky_AccessPhotoPage.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/MeetSky_AccessTalkPage.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/MeetSky_ActivityPage.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/MeetSky_FilesAndFolders.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/MeetSky_NewFolderCreation.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/MeetSky_UploadAndDownload.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/MeetSky_createGroupChannels.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/MeetSky_loginFeatures.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/features/MeetSky_manageConversations.feature" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Pages/MeetSkyDashboard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Pages/MeetSkyFiles.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Pages/MeetSkyGroupChat.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Pages/MeetSkyLogin.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Pages/MeetSkyPhotosPage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Pages/MeetSkyTalkPage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Runners/BladeRunner.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Runners/DaurenRunner.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Runners/Noor_Runner.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Utilities/BrowserUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Utilities/ConfigurationReader.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/Utilities/Driver.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/step_definitions/MeetSky_AccessPhotoPage_stepDefinitions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/groupProject/step_definitions/MeetSky_stepDefinitions.class" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="master" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2LgtHPletB6RGkQhrugWGbuab4S" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+  }
+}</component>
+  <component name="RunManager" selected="JUnit.BladeRunner">
+    <configuration name="Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page." type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/MeetSky_UploadAndDownload.feature" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="GroupProject01_selfAutomation" />
+      <option name="NAME_FILTER" value="^1\.Verify users can upload a file by clicking the \+ icon on the Files page\.$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^1\.Verify users can upload a file by clicking the \+ icon on the Files page\.$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page." />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Scenario: 2.Verify the users can rename a file by clicking the 3 dots." type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/MeetSky_UploadAndDownload.feature" />
+      <option name="GLUE" value="groupProject.step_definitions" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="GroupProject01_selfAutomation" />
+      <option name="NAME_FILTER" value="^2\.Verify the users can rename a file by clicking the 3 dots\.$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^2\.Verify the users can rename a file by clicking the 3 dots\.$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: 2.Verify the users can rename a file by clicking the 3 dots." />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Scenario: 3.Verify the users can download a file by clicking the 3 dots." type="CucumberJavaRunConfigurationType" factoryName="Cucumber java" temporary="true" nameIsGenerated="true">
+      <option name="CUCUMBER_CORE_VERSION" value="5" />
+      <option name="FILE_PATH" value="$PROJECT_DIR$/src/test/resources/features/MeetSky_UploadAndDownload.feature" />
+      <option name="GLUE" value="groupProject.step_definitions" />
+      <option name="MAIN_CLASS_NAME" value="io.cucumber.core.cli.Main" />
+      <module name="GroupProject01_selfAutomation" />
+      <option name="NAME_FILTER" value="^3\.Verify the users can download a file by clicking the 3 dots\.$" />
+      <option name="PROGRAM_PARAMETERS" value=" --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --name &quot;^3\.Verify the users can download a file by clicking the 3 dots\.$&quot;" />
+      <option name="SUGGESTED_NAME" value="Scenario: 3.Verify the users can download a file by clicking the 3 dots." />
+      <option name="WORKING_DIRECTORY" value="$MODULE_WORKING_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="io.cucumber.core.cli.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Alex_Runner" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GroupProject01_selfAutomation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="groupProject.Runners.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="groupProject.Runners" />
+      <option name="MAIN_CLASS_NAME" value="groupProject.Runners.Alex_Runner" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BladeRunner" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="GroupProject01_selfAutomation" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="groupProject.Runners.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="groupProject.Runners" />
+      <option name="MAIN_CLASS_NAME" value="groupProject.Runners.BladeRunner" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.BladeRunner" />
+        <item itemvalue="Cucumber Java.Scenario: 1.Verify users can upload a file by clicking the + icon on the Files page." />
+        <item itemvalue="JUnit.Alex_Runner" />
+        <item itemvalue="Cucumber Java.Scenario: 3.Verify the users can download a file by clicking the 3 dots." />
+        <item itemvalue="Cucumber Java.Scenario: 2.Verify the users can rename a file by clicking the 3 dots." />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2734c7c2-9800-4c59-917e-548aac9d56b5" name="Changes" comment="" />
+      <created>1676304465252</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1676304465252</updated>
+      <workItem from="1676304466444" duration="247000" />
+      <workItem from="1676304825742" duration="120000" />
+      <workItem from="1676304967226" duration="3117000" />
+      <workItem from="1676310661902" duration="187000" />
+      <workItem from="1676310867662" duration="19000" />
+      <workItem from="1676310905786" duration="25000" />
+      <workItem from="1676310939216" duration="1204000" />
+      <workItem from="1676324110160" duration="1476000" />
+      <workItem from="1676327140540" duration="101000" />
+      <workItem from="1676327263321" duration="269000" />
+      <workItem from="1676327550941" duration="274000" />
+      <workItem from="1676327888014" duration="7311000" />
+      <workItem from="1676341394545" duration="1442000" />
+      <workItem from="1676342861475" duration="14129000" />
+      <workItem from="1676408654650" duration="22000" />
+      <workItem from="1676408694908" duration="7478000" />
+      <workItem from="1676471512982" duration="1858000" />
+      <workItem from="1676482344851" duration="1558000" />
+      <workItem from="1676500424211" duration="297000" />
+      <workItem from="1676500740754" duration="1875000" />
+      <workItem from="1676509124682" duration="8227000" />
+      <workItem from="1676587473258" duration="507000" />
+      <workItem from="1676590325170" duration="16838000" />
+      <workItem from="1676734927484" duration="18000" />
+      <workItem from="1676735489612" duration="1514000" />
+      <workItem from="1676737037327" duration="88000" />
+      <workItem from="1676737788572" duration="359000" />
+      <workItem from="1676738610912" duration="2611000" />
+      <workItem from="1676824753622" duration="2170000" />
+      <workItem from="1676859543755" duration="3607000" />
+      <workItem from="1676908331835" duration="1809000" />
+      <workItem from="1676936527619" duration="1704000" />
+    </task>
+    <task id="LOCAL-00001" summary="Added gitignore file">
+      <created>1676331892670</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1676331892670</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added code to the user_should_see_all_the_files_and_folders_checkboxes_selected_automatically()&#10;step definition method">
+      <created>1676332558769</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1676332558769</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Working on the Upload/Download feature">
+      <created>1676397058789</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1676397058789</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Commit some changes">
+      <created>1676397813666</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1676397813666</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Commit some more framework changes">
+      <created>1676406043014</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1676406043014</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Commit some more framework changes">
+      <created>1676407512841</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1676407512841</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added implementation to the Login functionality Scenario 1">
+      <created>1676407609789</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1676407609789</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added implementation to the Login functionality Scenario 2">
+      <created>1676410578211</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1676410578211</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Finished login functionality scenario 4 automation script">
+      <created>1676424100818</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1676424100818</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added report to @cucumberOptions">
+      <created>1676503426833</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1676503426834</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Commit everything">
+      <created>1676597109854</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1676597109854</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Added regression tag and logout method to Daurens automation script, + added more logic to &quot;add to favorite&quot; test script">
+      <created>1676657281060</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1676657281060</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added regression tag and logout method to Daurens automation script, + added more logic to &quot;add to favorite&quot; test script">
+      <created>1676657314357</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1676657314357</updated>
+    </task>
+    <task id="LOCAL-00014" summary="updated add to favourites test again">
+      <created>1676735875110</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1676735875110</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fixed Noor's @regression tax syntax, deleted extra Runners classes">
+      <created>1676736004824</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1676736004824</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="alexBranch" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="HEAD" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added gitignore file" />
+    <MESSAGE value="Added code to the user_should_see_all_the_files_and_folders_checkboxes_selected_automatically()&#10;step definition method" />
+    <MESSAGE value="Working on the Upload/Download feature" />
+    <MESSAGE value="Commit some changes" />
+    <MESSAGE value="Commit some more framework changes" />
+    <MESSAGE value="Added implementation to the Login functionality Scenario 1" />
+    <MESSAGE value="Added implementation to the Login functionality Scenario 2" />
+    <MESSAGE value="Finished login functionality scenario 4 automation script" />
+    <MESSAGE value="Added report to @cucumberOptions" />
+    <MESSAGE value="Commit everything" />
+    <MESSAGE value="Added regression tag and logout method to Daurens automation script, + added more logic to &quot;add to favorite&quot; test script" />
+    <MESSAGE value="updated add to favourites test again" />
+    <MESSAGE value="fixed Noor's @regression tax syntax, deleted extra Runners classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed Noor's @regression tax syntax, deleted extra Runners classes" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
